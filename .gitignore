@@ -1,6 +1,9 @@
 **/.DS_Store
 **/env_*/
 **/*.csv
+**/*.zip
 **/.env
 **/.vscode
 **/.idea
+
+dataset/FakeNewsNet
