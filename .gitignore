@@ -5,6 +5,7 @@
 **/.env
 **/.vscode
 **/.idea
+**/*.joblib
 
 dataset/FakeNewsNet/data
 dataset/LIAR/data
