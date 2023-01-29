@@ -6,6 +6,10 @@
 **/.vscode
 **/.idea
 **/*.joblib
+**/*.pkl
+**/*.tsv
+**/*.npy
+**/*.model
 
 dataset/FakeNewsNet/data
 dataset/LIAR/data
