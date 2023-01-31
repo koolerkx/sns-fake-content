@@ -14,3 +14,4 @@
 dataset/FakeNewsNet/data
 dataset/LIAR/data
 dataset/ISOT/data
+model/word-embedding/logs
