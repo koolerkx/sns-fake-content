@@ -16,3 +16,6 @@ dataset/LIAR/data
 dataset/ISOT/data
 model/word-embedding/logs
 model/word-embedding/model.h5
+model/training/transformer/distbert/trainer
+model/training/transformer/model_distilbert
+model/training/transformer/data
