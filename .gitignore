@@ -20,4 +20,4 @@ model/word-embedding/model.h5
 model/training/transformer/distbert/trainer
 model/training/transformer/model_distilbert
 model/training/transformer/data
-model/training/transformer/model/$training-20230203-034151$-model-microsoft/deberta-base/log
+model/training/transformer/model
