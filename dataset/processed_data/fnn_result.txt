@@ -1,0 +1,27 @@
+File created /home/kooler/dev/sw/sns-fake-content/dataset/processed_data/transformer_datasets/fnn_3xs.zip
+{'train': {'shape': (3840,), 'true': 1917, 'false': 1923}, 'val': {'shape': (960,), 'true': 462, 'false': 498}, 'test': {'shape': (1200,), 'true': 621, 'false': 579}}
+=================================
+                                                                                                  
+File created /home/kooler/dev/sw/sns-fake-content/dataset/processed_data/transformer_datasets/fnn_2xs.zip
+{'train': {'shape': (25600,), 'true': 12834, 'false': 12766}, 'val': {'shape': (6400,), 'true': 3194, 'false': 3206}, 'test': {'shape': (8000,), 'true': 3972, 'false': 4028}}
+=================================
+                                                                                                  
+File created /home/kooler/dev/sw/sns-fake-content/dataset/processed_data/transformer_datasets/fnn_xs.zip
+{'train': {'shape': (51200,), 'true': 25635, 'false': 25565}, 'val': {'shape': (12800,), 'true': 6366, 'false': 6434}, 'test': {'shape': (16000,), 'true': 7999, 'false': 8001}}
+=================================
+                                                                                                    
+File created /home/kooler/dev/sw/sns-fake-content/dataset/processed_data/transformer_datasets/fnn_s.zip
+{'train': {'shape': (102400,), 'true': 51168, 'false': 51232}, 'val': {'shape': (25600,), 'true': 12784, 'false': 12816}, 'test': {'shape': (32000,), 'true': 16048, 'false': 15952}}
+=================================
+                                                                                                    
+File created /home/kooler/dev/sw/sns-fake-content/dataset/processed_data/transformer_datasets/fnn_m.zip
+{'train': {'shape': (204800,), 'true': 102120, 'false': 102680}, 'val': {'shape': (51200,), 'true': 25815, 'false': 25385}, 'test': {'shape': (64000,), 'true': 32065, 'false': 31935}}
+=================================
+                                                                                                    
+File created /home/kooler/dev/sw/sns-fake-content/dataset/processed_data/transformer_datasets/fnn_l.zip
+{'train': {'shape': (625964,), 'true': 320125, 'false': 305839}, 'val': {'shape': (156491,), 'true': 80097, 'false': 76394}, 'test': {'shape': (195614,), 'true': 99778, 'false': 95836}}
+=================================
+                                                                                                    
+File created /home/kooler/dev/sw/sns-fake-content/dataset/processed_data/transformer_datasets/fnn_xl.zip
+{'train': {'shape': (918128,), 'true': 612025, 'false': 306103}, 'val': {'shape': (229532,), 'true': 153330, 'false': 76202}, 'test': {'shape': (286915,), 'true': 191151, 'false': 95764}}
+=================================
