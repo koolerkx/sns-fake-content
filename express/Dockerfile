@@ -1,24 +1,23 @@
-# Base image
+# base image
 FROM node:19-alpine
 
-# Set working directory
+# set working directory
 WORKDIR /usr/src/app
 
-# Copy package.json and package-lock.json to workdir
+# copy package.json and package-lock.json to workdir
 COPY package*.json ./
 
-# Install dependencies
+# install dependencies (in clean way)
 RUN npm ci
 
-# Copy source code to workdir
+# copy source code to workdir
 COPY . .
 
-# Build the app
-# RUN npm run build
+# build the app
+RUN npm run build
 
-# Expose the port
-# EXPOSE 3000
+# expose the port
+EXPOSE 3000
 
-# Run the app
-# CMD ["npm", "serve"]
-CMD ["npm", "start"]
+# run the app
+CMD ["npm", "run", "serve"]

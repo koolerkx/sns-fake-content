@@ -6,7 +6,8 @@
   "scripts": {
     "start": "nodemon src/app.ts",
     "build": "tsc --project ./",
-    "test": "tsc --noEmit && eslint 'src/*.ts'"
+    "test": "tsc --noEmit && eslint 'src/*.ts'",
+    "serve": "node ./build/app.js"
   },
   "author": "Kooler Fan",
   "license": "ISC",
