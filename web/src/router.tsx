@@ -1,10 +1,17 @@
 import { createBrowserRouter } from 'react-router-dom';
-import HomeScreen from './pages/home';
+import RootScreen from './pages/RootScreen';
+import HomeScreen from './pages/HomeScreen';
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <HomeScreen />,
+    element: <RootScreen />,
+    children: [
+      {
+        path: '/',
+        element: <HomeScreen />,
+      },
+    ],
   },
 ]);
 

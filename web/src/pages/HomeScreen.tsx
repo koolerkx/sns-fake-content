@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import '../App.css';
 import reactLogo from '../assets/react.svg';
 
 const HomeScreen = (): React.ReactElement => {
