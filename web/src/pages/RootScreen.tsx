@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import {
   InboxOutlined,
   HomeOutlined,
@@ -8,37 +8,66 @@ import {
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Layout, Menu, theme } from 'antd';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 
 const { Header, Content, Footer, Sider } = Layout;
+
+const ScreenInfo: Record<string, { key: string; name: string; path: string }> =
+  {
+    Home: {
+      key: 'Home',
+      name: 'Home',
+      path: '/',
+    },
+    Detection: {
+      key: 'Detection',
+      name: 'Detection',
+      path: '/detect',
+    },
+    Dataset: {
+      key: 'Dataset',
+      name: 'Dataset',
+      path: '',
+    },
+    DatasetInformation: {
+      key: 'DatasetInformation',
+      name: 'Information',
+      path: '/dataset/info',
+    },
+    DatasetWordFrequency: {
+      key: 'DatasetWordFrequency',
+      name: 'Word Frequency',
+      path: '/dataset/word-frequency',
+    },
+  };
 
 type MenuItem = Required<MenuProps>['items'][number];
 
 const items: MenuItem[] = [
   {
-    key: 'Home',
+    key: ScreenInfo.Home.key,
     icon: <HomeOutlined />,
-    label: 'Home',
+    label: ScreenInfo.Home.name,
   },
   {
-    key: 'Detection',
+    key: ScreenInfo.Detection.key,
     icon: <InboxOutlined />,
-    label: 'Detection',
+    label: ScreenInfo.Detection.name,
   },
   {
-    key: 'Dataset',
+    key: ScreenInfo.Dataset.key,
     icon: <FileTextOutlined />,
-    label: 'Dataset',
+    label: ScreenInfo.Dataset.name,
     children: [
       {
-        key: 'Information',
+        key: ScreenInfo.DatasetInformation.key,
         icon: <InfoCircleOutlined />,
-        label: 'Information',
+        label: ScreenInfo.DatasetInformation.name,
       },
       {
-        key: 'Word Frequency',
+        key: ScreenInfo.DatasetWordFrequency.key,
         icon: <BarChartOutlined />,
-        label: 'Word Frequency',
+        label: ScreenInfo.DatasetWordFrequency.name,
       },
     ],
   },
@@ -46,9 +75,19 @@ const items: MenuItem[] = [
 
 const RootScreen: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
+  const navigate = useNavigate();
+
   const {
     token: { colorBgContainer },
   } = theme.useToken();
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const onMenuItemClick = useCallback(({ key }: any) => {
+    const screenInfo = ScreenInfo[key];
+    if (!screenInfo) return;
+
+    navigate(screenInfo.path);
+  }, []);
 
   return (
     <Layout style={{ minHeight: '100vh' }}>
@@ -69,6 +108,7 @@ const RootScreen: React.FC = () => {
           defaultSelectedKeys={['Home']}
           mode="inline"
           items={items}
+          onClick={onMenuItemClick}
         />
       </Sider>
       <Layout className="site-layout">
