@@ -12,13 +12,14 @@
 **/*.npy
 **/*.model
 **/__pycache__
+**/*.gzip
 
 dataset/FakeNewsNet/data
 dataset/LIAR/data
 dataset/ISOT/data
-model/word-embedding/logs
-model/word-embedding/model.h5
-model/training/transformer/distbert/trainer
-model/training/transformer/model_distilbert
-model/training/transformer/data
-model/training/transformer/model
+model/archive/word-embedding/logs
+model/archive/word-embedding/model.h5
+model/archive/training/transformer/distbert/trainer
+model/archive/training/transformer/model_distilbert
+model/archive/training/transformer/data
+model/archive/training/transformer/model
