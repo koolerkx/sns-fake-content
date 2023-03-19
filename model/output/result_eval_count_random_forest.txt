@@ -1,0 +1,28 @@
+Evaluation Result
+              precision    recall  f1-score   support
+
+       false       0.94      0.95      0.95     15956
+        true       0.95      0.94      0.94     16044
+
+    accuracy                           0.95     32000
+   macro avg       0.95      0.95      0.95     32000
+weighted avg       0.95      0.95      0.95     32000
+
+LIAR Evaluation Result
+              precision    recall  f1-score   support
+
+       false       0.65      0.32      0.43      8284
+        true       0.35      0.69      0.47      4507
+
+    accuracy                           0.45     12791
+   macro avg       0.50      0.50      0.45     12791
+weighted avg       0.55      0.45      0.44     12791
+
+Accurate Result
+{
+    "auc": 0.9873616270785548,
+    "accuracy": 0.94503125,
+    "precision": 0.949185585812213,
+    "recall": 0.9407255048616305,
+    "f1": 0.9449366097980904
+}
