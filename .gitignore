@@ -14,6 +14,7 @@
 **/*.model
 **/__pycache__
 **/*.gzip
+**/*.tar.gz
 
 dataset/FakeNewsNet/data
 dataset/LIAR/data
@@ -24,3 +25,4 @@ model/archive/training/transformer/distbert/trainer
 model/archive/training/transformer/model_distilbert
 model/archive/training/transformer/data
 model/archive/training/transformer/model
+model/input
