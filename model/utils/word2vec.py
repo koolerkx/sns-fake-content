@@ -2,6 +2,8 @@ import numpy as np
 import skimage.measure
 
 from sklearn.base import BaseEstimator, TransformerMixin
+from keras.layers import Embedding
+import tensorflow as tf
 
 
 class GensimVectorizer(BaseEstimator, TransformerMixin):
