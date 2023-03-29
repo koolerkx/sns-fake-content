@@ -1,27 +1,28 @@
 import { Request, Response } from 'express';
+import { HistoryService } from '../service/HistoryService';
 import { ModelDetectionService } from '../service/ModelDetectionService';
 
 export class ModelDetectionController {
     constructor(
         private modelDetectionService: ModelDetectionService = new ModelDetectionService(),
-    ) {
-        this.detect = this.detect.bind(this);
-    }
+        private historyService: HistoryService = new HistoryService(),
+    ) { }
 
-    async detect(req: Request, res: Response): Promise<void> {
+    detect = async (req: Request, res: Response): Promise<void> => {
         const { type, text } = req.body;
 
         if (!type || !text) {
             throw new Error('Invalid request body');
         }
 
-        const delegate = this.modelDetectionService.convertTypeToModelNames(type);
+        const ret = await this.modelDetectionService.detect(type, text);
 
-        if (!delegate) {
-            throw new Error('Invalid type');
-        }
-
-        const ret = await delegate(text);
+        // database
+        await this.historyService.addHistory({
+            type,
+            text,
+            score: ret.data,
+        });
 
         res.json({
             ...ret,
