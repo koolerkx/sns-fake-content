@@ -1,0 +1,13 @@
+{
+    "tfidf-svm": "count-rf5",
+    "tfidf-nb": "count-rf5",
+    "tfidf-rf": "count-rf5",
+    "tfidf-cnn": "count-rf5",
+    "tfidf-rnn": "count-rf5",
+    "word2vec-svm": "count-rf5",
+    "word2vec-rf": "count-rf5",
+    "word2vec-cnn": "count-rf5",
+    "word2vec-rnn": "count-rf5",
+    "xlnet": "count-rf5",
+    "bert": "count-rf5"
+}
