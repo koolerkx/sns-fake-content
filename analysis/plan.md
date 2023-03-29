@@ -13,10 +13,10 @@
 
 ### Label
 
-- [ ]Distribution
-  - [ ]Pie Chart
-  - [ ]Bar Chart (Total 100%)
-    - [ ]Time Series
+- [x] Distribution
+  - [x]Pie Chart
+  - [x]Bar Chart (Total 100%)
+    - [x]Time Series
   
 ### Metrics
 
@@ -26,21 +26,15 @@
     - [ ]box and whisker diagram
   - [ ]Time Series
 
-### Language
-
-- [ ]Distribution
-
 ### Context
 
-- [ ]Ranking
-  - [ ]Bar Chart
-- [ ]Distribution
-  - [ ]Tree map
+- [x]Ranking
+  - [x]Bar Chart
 
 ### Hashtag
 
-- [ ]Frequency
-  - [ ]Word Cloud
+- [x]Frequency
+  - [x]Word Cloud
 
 ### URL
 
