@@ -1,10 +1,8 @@
 import { Request, Response } from 'express';
 import { HistoryService } from '../service/HistoryService';
-import { ModelDetectionService } from '../service/ModelDetectionService';
 
-export class ModelDetectionController {
+export class MockDetectionController {
     constructor(
-        private modelDetectionService: ModelDetectionService = new ModelDetectionService(),
         private historyService: HistoryService = new HistoryService(),
     ) { }
 
@@ -15,17 +13,17 @@ export class ModelDetectionController {
             throw new Error('Invalid request body');
         }
 
-        const ret = await this.modelDetectionService.detect(type, text);
+        const score = Math.random();
 
-        // database
         await this.historyService.addHistory({
             type,
             text,
-            score: ret.data,
+            score,
         });
 
         res.json({
-            ...ret,
+            result: true,
+            data: score,
         });
     }
 }

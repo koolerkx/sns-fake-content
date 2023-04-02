@@ -1,43 +1,44 @@
-import { getDetectionByBERT, getDetectionByTFIDFCNN, getDetectionByTFIDFNB, getDetectionByTFIDFRF, getDetectionByTFIDFRNN, getDetectionByTFIDFSVM, getDetectionByWord2VecCNN, getDetectionByWord2VecRF, getDetectionByWord2VecRNN, getDetectionByWord2VecSVM, getDetectionByXLNet } from '../connector/DetectionAPI/DetectionAPI';
-import ResponseModal from '../connector/DetectionAPI/model/ResponseModal';
+import endpoints from '../config/endpoint.config.json';
+import AWS from "aws-sdk";
+import process from "process";
 
-type ReducingObject = {[k: string]: ReducingObject | ((text: string) => Promise<ResponseModal>)};
+const sageMakerRuntime = new AWS.SageMakerRuntime({
+    region: "ap-southeast-2",
+    accessKeyId: process.env.AWS_SAGEMAKER_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SAGEMAKER_SECRET_ACCESS_KEY,
+});
 
 export class ModelDetectionService {
-    convertTypeToModelNames(type: string) {
-        const arr = type.split('-');
 
-        const map = {
-            tfidf: {
-                svm: getDetectionByTFIDFSVM,
-                nb: getDetectionByTFIDFNB,
-                rf: getDetectionByTFIDFRF,
-                cnn: getDetectionByTFIDFCNN,
-                rnn: getDetectionByTFIDFRNN,
-            },
-            word2vec: {
-                svm: getDetectionByWord2VecSVM,
-                rf: getDetectionByWord2VecRF,
-                cnn: getDetectionByWord2VecCNN,
-                rnn: getDetectionByWord2VecRNN,
-            },
-            bert: getDetectionByBERT,
-            xlnet: getDetectionByXLNet,
+    detect = async (type: string, text: string): Promise<{
+        result: boolean;
+        data: number;
+    }> => {
+
+        const index = Object.keys(endpoints).findIndex(e => e.toLowerCase() === type.toLowerCase());
+
+        if (index === -1) {
+            throw new Error('invalid model type.');
+        }
+
+        const params = {
+            Body: text,
+            EndpointName: Object.values(endpoints)[index],
+            ContentType: "text/plain",
         };
 
-        const delegate = arr.reduce((
-            a: ReducingObject | ((text: string) => Promise<ResponseModal>) | null,
-            b: string,
-        ) => {
-            if (a && typeof a === 'function') {
-                return a;
-            }
-            if (a && typeof a === 'object' && a.hasOwnProperty(b)) {
-                return a[b];
-            }
-            return null;
-        }, map);
+        const result = await new Promise((res, rej) => sageMakerRuntime.invokeEndpoint(params, (err, data) => {
+            if (err) {
+                rej(err);
+            } else {
+                res(JSON.parse(Buffer.from(data.Body as any).toString()));
+            };
+        })) as [['true' | 'false'], [[number, number]]];
 
-        return typeof delegate === 'function' ? delegate : null;
+        return {
+            result: result[0][0] === 'true',
+            data: result[1][0][1],
+        };
     }
+
 }

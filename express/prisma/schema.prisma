@@ -1,0 +1,199 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_CONNECTION_STRING")
+}
+
+type TweetAnnotationsAnnotations {
+  end             Int?
+  normalized_text String?
+  probability     Float?
+  start           Int?
+  type            String?
+}
+
+type TweetCashtagsCashtags {
+  /// Could not determine type: the field only had null or empty values in the sample set.
+  end   Json?
+  /// Could not determine type: the field only had null or empty values in the sample set.
+  start Json?
+  /// Could not determine type: the field only had null or empty values in the sample set.
+  tag   Json?
+}
+
+type TweetHashtagsHashtags {
+  end   Int?
+  start Int?
+  tag   String?
+}
+
+type TweetMentionsMentions {
+  end      Int?
+  id       String?
+  start    Int?
+  username String?
+}
+
+type TweetUrlsUrls {
+  description  String?
+  display_url  String?
+  end          Int?
+  expanded_url String?
+  images       TweetUrlsUrlsImages[]
+  media_key    String?
+  start        Int?
+  status       Int?
+  title        String?
+  unwound_url  String?
+  url          String?
+}
+
+type TweetUrlsUrlsImages {
+  height Int
+  url    String
+  width  Int
+}
+
+type UserCashtagsCashtagRaw {
+  end   Int
+  start Int
+  tag   String
+}
+
+type UserHashtagsHashtagRaw {
+  end   Int
+  start Int
+  tag   String
+}
+
+type UserUrlsUrls {
+  display_url  String
+  end          Int
+  expanded_url String
+  start        Int
+  url          String
+}
+
+model histories {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt DateTime @db.Date
+  score     Float
+  text      String
+  type      String
+  label     String
+}
+
+model tweet_annotations {
+  id          String                      @id @default(auto()) @map("_id") @db.ObjectId
+  annotations TweetAnnotationsAnnotations
+  /// Multiple data types found: Int: 0.1%, BigInt: 99.9% out of 1000 sampled entries
+  tweet_id    Json
+}
+
+model tweet_cashtags {
+  id       String                @id @default(auto()) @map("_id") @db.ObjectId
+  cashtags TweetCashtagsCashtags
+  /// Multiple data types found: Int: 0.3%, BigInt: 99.7% out of 1000 sampled entries
+  tweet_id Json
+}
+
+model tweet_context {
+  id                 String  @id @default(auto()) @map("_id") @db.ObjectId
+  domain_description String?
+  domain_id          Int?
+  domain_name        String?
+  entity_description String?
+  entity_id          BigInt?
+  entity_name        String?
+  tweet_id           BigInt
+}
+
+model tweet_hashtags {
+  id       String                @id @default(auto()) @map("_id") @db.ObjectId
+  hashtags TweetHashtagsHashtags
+  /// Multiple data types found: Int: 0.2%, BigInt: 99.8% out of 1000 sampled entries
+  tweet_id Json
+}
+
+model tweet_mentions {
+  id       String                @id @default(auto()) @map("_id") @db.ObjectId
+  mentions TweetMentionsMentions
+  tweet_id BigInt
+}
+
+model tweet_urls {
+  id       String        @id @default(auto()) @map("_id") @db.ObjectId
+  tweet_id BigInt
+  urls     TweetUrlsUrls
+}
+
+model tweets {
+  id                     String   @id @default(auto()) @map("_id") @db.ObjectId
+  /// Multiple data types found: Int: 53.2%, BigInt: 46.8% out of 1000 sampled entries
+  author_id              Json
+  content                String
+  /// Multiple data types found: Int: 0.1%, BigInt: 99.9% out of 1000 sampled entries
+  conversation_id        Json
+  created_at             DateTime @db.Date
+  edit_history_tweet_ids String[]
+  impression_count       Int
+  label                  String
+  lang                   String
+  like_count             Int
+  possibly_sensitive     Boolean
+  quote_count            Int
+  quote_ids              String[]
+  replied_to_ids         String[]
+  reply_count            Int
+  reply_settings         String
+  retweet_count          Int
+  /// Multiple data types found: Int: 0.1%, BigInt: 99.9% out of 1000 sampled entries
+  tweet_id               Json
+}
+
+model user_cashtags {
+  id          String                   @id @default(auto()) @map("_id") @db.ObjectId
+  cashtag_raw UserCashtagsCashtagRaw[]
+  cashtags    String[]
+  /// Multiple data types found: Int: 69.8%, BigInt: 30.2% out of 387 sampled entries
+  user_id     Json
+}
+
+model user_hashtags {
+  id          String                   @id @default(auto()) @map("_id") @db.ObjectId
+  hashtag     String
+  hashtag_raw UserHashtagsHashtagRaw[]
+  hashtags    String[]
+  /// Multiple data types found: Int: 67.4%, BigInt: 32.6% out of 1000 sampled entries
+  user_id     Json
+}
+
+model user_urls {
+  id       String         @id @default(auto()) @map("_id") @db.ObjectId
+  raw_urls String
+  urls     UserUrlsUrls[]
+  /// Multiple data types found: Int: 74.4%, BigInt: 25.6% out of 1000 sampled entries
+  user_id  Json
+}
+
+model users {
+  id                     String  @id @default(auto()) @map("_id") @db.ObjectId
+  created_at             String
+  description            String?
+  followers_count        Int
+  following_count        Int
+  listed_count           Int
+  name                   String
+  pinned_tweet_id        BigInt?
+  profile_image_url      String
+  protected              Boolean
+  source                 String
+  tweet_count            Int
+  /// Multiple data types found: Int: 62.5%, BigInt: 37.5% out of 1000 sampled entries
+  user_id                Json
+  username               String
+  verified               Boolean
+}
