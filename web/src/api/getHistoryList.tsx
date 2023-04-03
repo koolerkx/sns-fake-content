@@ -7,7 +7,5 @@ export default async () => {
         throw new Error('unknown network issue.');
     }
 
-    const json = (await res.json() || []) as (History & { createdAt: string; updatedAt: string; })[];
-
-    return json.sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt));
+    return (await res.json() || []) as (History & { createdAt: string; })[];
 };

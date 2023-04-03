@@ -7,6 +7,18 @@ export class AggregationController {
         private aggregationService: AggregationService = new AggregationService(),
     ) { }
 
+    getTop20FalseTags = async (_: Request, res: Response) => {
+        res.json(await this.aggregationService.getTop20FalseTags());
+    }
+
+    getTop20TrueTags = async (_: Request, res: Response) => {
+        res.json(await this.aggregationService.getTop20TrueTags());
+    }
+
+    getLikeCountStats = async (_: Request, res: Response) => {
+        res.json(await this.aggregationService.getLikeCountStats());
+    }
+
     getWordCloud = async (_: Request, res: Response) => {
         res.json(await this.aggregationService.getWordCloud());
     }

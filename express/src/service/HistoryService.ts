@@ -4,7 +4,11 @@ import { prisma } from "../utils/db";
 export class HistoryService {
 
     async getAllHistory() {
-        return await prisma.histories.findMany();
+        return await prisma.histories.findMany({
+            orderBy: {
+                createdAt: 'desc',
+            }
+        });
     }
 
     async addHistory(obj: { score: number; text: string; type: string; }) {
