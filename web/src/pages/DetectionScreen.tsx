@@ -2,7 +2,7 @@ import { Card, Col, Divider, Row, Typography } from 'antd';
 import HistoryList from '../components/HistoryList';
 import DetectionInput from '../components/DetectionInput';
 import SimpleDetectionResultDisplay from '../components/SimpleDetectionResultDisplay';
-const { Title, Paragraph } = Typography;
+const { Title } = Typography;
 
 const DetectionScreen = () => {
     return (

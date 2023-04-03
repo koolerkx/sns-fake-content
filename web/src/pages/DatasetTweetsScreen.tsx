@@ -1,4 +1,4 @@
-import { Card, Col, Divider, Row, Space, Statistic, Typography } from "antd";
+import { Card, Col, Divider, Row, Statistic, Typography } from "antd";
 import { useQuery } from "react-query";
 import getLikeCountStats from "../api/getLikeCountStats";
 import getTop20FalseTags from "../api/getTop20FalseTags";

@@ -1,7 +1,7 @@
 import { LineChart } from "@opd/g2plot-react";
 import { Card, Col, Divider, Row, Typography } from "antd";
 import { useQuery } from "react-query";
-const { Title, Paragraph } = Typography;
+const { Title } = Typography;
 import { TreemapChart, WordCloudChart } from "@opd/g2plot-react";
 import getWordCloud from "../api/getWordCloud";
 import { useRef } from "react";

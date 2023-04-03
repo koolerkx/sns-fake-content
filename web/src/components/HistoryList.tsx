@@ -1,4 +1,4 @@
-import { Alert, Card, Divider, Typography } from "antd";
+import { Alert, Card } from "antd";
 import { useQuery } from "react-query";
 import getHistoryList from "../api/getHistoryList";
 
