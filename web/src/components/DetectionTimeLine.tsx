@@ -26,7 +26,7 @@ const DetectionTimeLine = () => {
     return (
         <Timeline items={
             (data || [])
-                .map((e, i) => ({
+                .map((e) => ({
                     children: `detected at: ${e.createdAt.split('T').shift()}, with the creditability of: ${(e.score * 100).toFixed(2)}` 
                 }))
         } />

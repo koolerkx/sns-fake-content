@@ -11,6 +11,9 @@ aggregationRouter.get('/getWordCloud', aggregationController.getWordCloud);
 aggregationRouter.get('/getPercentagesOfTweetsGroupByLabel', aggregationController.getPercentagesOfTweetsGroupByLabel);
 aggregationRouter.get('/getDetectionCount', aggregationController.getDetectionCount);
 aggregationRouter.get('/getDatasetCount', aggregationController.getDatasetCount);
+aggregationRouter.get('/getLikeCountStats', aggregationController.getLikeCountStats);
+aggregationRouter.get('/getTop20TrueTags', aggregationController.getTop20TrueTags);
+aggregationRouter.get('/getTop20FalseTags', aggregationController.getTop20FalseTags);
 
 // history router
 export const historyRouter = express.Router();

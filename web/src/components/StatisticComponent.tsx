@@ -16,7 +16,7 @@ const StatisticComponent = () => {
         </Col>
 
         <Col span={12}>
-          <Statistic title="Dataset Count" value={datasetCount} />
+          <Statistic title="Total Dataset Test Record" value={datasetCount} />
         </Col>
       </Row>
     </Card>

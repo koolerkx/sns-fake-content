@@ -1,8 +1,23 @@
 import mockPercentages from '../mock/tweet-sum-group-by-label.json';
 import mockWordCloud from '../mock/word-cloud.json';
+import mockTop20TrueTags from '../mock/tag-true-top-20.json';
+import mockTop20FalseTags from '../mock/tag-false-top-20.json';
+import mockLikeCountStats from '../mock/like-count-stat.json';
 import { prisma } from '../utils/db';
 
 export class AggregationService {
+
+    async getTop20FalseTags() {
+        return mockTop20FalseTags;
+    }
+
+    async getTop20TrueTags() {
+        return mockTop20TrueTags;
+    }
+
+    async getLikeCountStats() {
+        return mockLikeCountStats;
+    }
 
     async getPercentagesOfTweetsGroupByLabel() {
         return mockPercentages;

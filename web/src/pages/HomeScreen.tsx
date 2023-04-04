@@ -59,23 +59,24 @@ const HomeScreen = (): React.ReactElement => {
         </Col>
 
         <Col sm={24} md={11}>
-          <div style={{
-            display: 'flex',
-            flexDirection: 'column',
-            rowGap: '1rem'
-          }}>
-            <Card title="Text Detection">
+          <Card title="Text Detection">
+
+            <div style={{
+              display: 'flex',
+              flexDirection: 'column',
+              rowGap: '1rem'
+            }}>
               <DetectionInput />
 
-              <div style={{ marginTop: '1rem' }}>
+              <div>
                 <Link to="/detect">Goto detection page for more flexible and versatile options.</Link>
               </div>
-            </Card>
 
-            <SimpleDetectionResultDisplay />
+              <SimpleDetectionResultDisplay />
 
-            <PieChart angleField={"count"} colorField={"_id"} data={test} />
-          </div>
+              <PieChart angleField={"count"} colorField={"_id"} data={test} />
+            </div>
+          </Card>
         </Col>
       </Row>
     </div>

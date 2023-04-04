@@ -3,7 +3,7 @@ import RootScreen from './pages/RootScreen';
 import HomeScreen from './pages/HomeScreen';
 import DetectionScreen from './pages/DetectionScreen';
 import DatasetInfoScreen from './pages/DatasetInfoScreen';
-import DatasetWordFrequency from './pages/DatasetWordFrequency';
+import DatasetTweetsScreen from './pages/DatasetTweetsScreen';
 
 const router = createBrowserRouter([
   {
@@ -23,11 +23,13 @@ const router = createBrowserRouter([
         element: <DatasetInfoScreen />,
       },
       {
-        path: '/dataset/word-frequency',
-        element: <DatasetWordFrequency />,
+        path: '/dataset/tweets',
+        element: <DatasetTweetsScreen />,
       },
     ],
   },
-]);
+], {
+  basename: import.meta.env.BASE_URL
+});
 
 export default router;

@@ -4,7 +4,7 @@ import {
   HomeOutlined,
   FileTextOutlined,
   InfoCircleOutlined,
-  BarChartOutlined,
+  TwitterOutlined,
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Layout, Menu, theme } from 'antd';
@@ -34,10 +34,10 @@ const ScreenInfo: Record<string, { key: string; name: string; path: string }> =
       name: 'Information',
       path: '/dataset/info',
     },
-    DatasetWordFrequency: {
-      key: 'DatasetWordFrequency',
-      name: 'Word Frequency',
-      path: '/dataset/word-frequency',
+    DatasetTweets: {
+      key: 'DatasetTweets',
+      name: 'Tweets dataset',
+      path: '/dataset/tweets',
     },
   };
 
@@ -65,9 +65,9 @@ const items: MenuItem[] = [
         label: ScreenInfo.DatasetInformation.name,
       },
       {
-        key: ScreenInfo.DatasetWordFrequency.key,
-        icon: <BarChartOutlined />,
-        label: ScreenInfo.DatasetWordFrequency.name,
+        key: ScreenInfo.DatasetTweets.key,
+        icon: <TwitterOutlined />,
+        label: ScreenInfo.DatasetTweets.name,
       },
     ],
   },

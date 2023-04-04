@@ -1,0 +1,37 @@
+[
+  {
+    "describe": "count",
+    "label": "1434575",
+    "like_count": 1434575.0
+  },
+  {
+    "describe": "null_count",
+    "label": "0",
+    "like_count": 0.0
+  },
+  {
+    "describe": "mean",
+    "label": null,
+    "like_count": 4.8884882282209015
+  },
+  {
+    "describe": "std",
+    "label": null,
+    "like_count": 217.8972063649537
+  },
+  {
+    "describe": "min",
+    "label": "false",
+    "like_count": 0.0
+  },
+  {
+    "describe": "max",
+    "label": "true",
+    "like_count": 121340.0
+  },
+  {
+    "describe": "median",
+    "label": null,
+    "like_count": 0.0
+  }
+]

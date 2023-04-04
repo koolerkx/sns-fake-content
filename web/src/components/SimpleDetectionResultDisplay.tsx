@@ -9,7 +9,7 @@ const SimpleDetectionResultDisplay = () => {
     const { score, text } = useNonpersistentDetectionOutputStore();
 
     const type = useMemo(() => {
-        return ['success', 'info', 'warning', 'error'][Math.floor((1 - score) * 4)] as AlertType;
+        return ['success', 'error'][Math.floor((1 - score) * 2)] as AlertType;
     }, [score]);
 
     useEffect(() => {
@@ -21,7 +21,7 @@ const SimpleDetectionResultDisplay = () => {
     return (
         <Alert
             type={type}
-            message={`the creditability of this message is ${(score * 100).toFixed(2)}% to be true.`}
+            message={`The creditability of this message is ${(score * 100).toFixed(2)}% to be true.`}
         />
     );
 }
