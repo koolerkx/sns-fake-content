@@ -1,10 +1,18 @@
 version: "3"
 
 services:
-  mongodb:
-    image: mongo:6.0.4
-    container_name: mongodb
+  web:
+    build:
+      context: ./web/
+      args:
+        - VITE_API_ENDPOINT=http://localhost:3000/v1
     ports:
-      - "27017:27017"
-    volumes:
-      - ./mongoData:/data/db
+      - "5173:5173"
+
+  express:
+    build:
+      context: ./express/
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./express/.env

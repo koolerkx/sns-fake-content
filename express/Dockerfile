@@ -14,6 +14,9 @@ RUN npm ci
 COPY . .
 
 # build the app
+RUN npx prisma generate
+
+# build the app
 RUN npm run build
 
 # expose the port
