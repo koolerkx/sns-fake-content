@@ -35,50 +35,51 @@ const App = () => {
   }, [isInside]);
 
   return (
-    <div
-      ref={ref}
-      style={{
+    <div ref={ref} style={{
         // fading effect
         opacity: isHighlighting || isInside ? 1 : 0,
         // position
-        position: "absolute",
+        position: 'absolute',
         left: `${paddedX}px`,
         top: isHighlighting || isInside ? `${paddedY}px` : `${paddedY + 16}px`,
-        // fading transition
-        transition: "all 500ms cubic-bezier(0.000, 1, 0.000, 1)",
-        transitionTimingFunction: "cubic-bezier(0.000, 1, 0.000, 1)",
         // on top of everything
         zIndex: 1000,
-      }}
-    >
-      <div
-        style={{
-          backgroundColor: "#A5D7E8",
-          border: "4px solid #19376D",
-          borderRadius: "4px",
-          padding: "8px",
-          color: "#19376D",
+    }}>
+      <div style={{
+          backgroundColor: 'white',
+          border: '4px solid #fc5185',
+          borderRadius: '4px',
+          padding: '8px',
+          color: "#fc5185",
           fontSize: "16px",
-        }}
-      >
-        {isError && error ? (
-          <div>error: {(error as Error).message}</div>
-        ) : data ? (
-          <div>
-            this text is likely {(data.data * 100).toFixed(2)}% would be fake.
-            [by model `{data.type}`]
-          </div>
-        ) : isLoading ? (
-          <div>loading...</div>
-        ) : (
-          <div onClick={() => mutate(text)} style={{ cursor: "pointer" }}>
-            <FaMicroscope width={32} />
-          </div>
-        )}
+      }} >
+        {
+          isError && error ? (
+            <div>
+              error: {(error as Error).message}
+            </div>
+          ): data ? (
+            <div>
+              The creditability of this message is <b>{(data.data * 100).toFixed(2)}%</b>.
+              Hence It should be a <b>{data.data > .5 ? "true" : "false"}</b> message.
+            </div>
+          ) : isLoading ? (
+            <div>
+              loading...
+            </div>
+          ): (
+            <div
+              onClick={() => mutate(text)}
+              style={{ cursor: 'pointer' }}
+            >
+              <FaMicroscope width={32} />
+            </div>
+          )
+        }
       </div>
     </div>
   );
-};
+}
 
 // wrapper
 
