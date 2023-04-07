@@ -28,7 +28,7 @@ const DatasetTweetsScreen = () => {
                 flexDirection: 'column',
                 rowGap: '1rem',
             }}>
-                <Row gutter={12}>
+                <Row gutter={16}>
                     <Col sm={24} md={12}>
                         <Card title="Basic like count analysis of the tweets dataset">
                             <Row gutter={24}>
@@ -67,7 +67,7 @@ const DatasetTweetsScreen = () => {
                     </Col>
                 </Row>
 
-                <Row gutter={12}>
+                <Row gutter={16}>
                     <Col sm={24} md={12}>
                         <Card title="Word Cloud">
                             <WordCloudChart

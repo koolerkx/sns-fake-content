@@ -34,7 +34,7 @@ const DatasetInfoScreen = () => {
 
             <Divider />
 
-            <Row gutter={12}>
+            <Row gutter={16}>
                 <Col sm={24} md={12}>
                     <div style={{
                         display: 'flex',

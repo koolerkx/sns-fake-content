@@ -9,37 +9,38 @@ import {
 import type { MenuProps } from 'antd';
 import { Layout, Menu, theme } from 'antd';
 import { Outlet, useNavigate } from 'react-router-dom';
+import logo from '../../public/logo.png';
 
 const { Header, Content, Footer, Sider } = Layout;
 
 const ScreenInfo: Record<string, { key: string; name: string; path: string }> =
-  {
-    Home: {
-      key: 'Home',
-      name: 'Home',
-      path: '/',
-    },
-    Detection: {
-      key: 'Detection',
-      name: 'Detection',
-      path: '/detect',
-    },
-    Dataset: {
-      key: 'Dataset',
-      name: 'Dataset',
-      path: '',
-    },
-    DatasetInformation: {
-      key: 'DatasetInformation',
-      name: 'Information',
-      path: '/dataset/info',
-    },
-    DatasetTweets: {
-      key: 'DatasetTweets',
-      name: 'Tweets dataset',
-      path: '/dataset/tweets',
-    },
-  };
+{
+  Home: {
+    key: 'Home',
+    name: 'Home',
+    path: '/',
+  },
+  Detection: {
+    key: 'Detection',
+    name: 'Detection',
+    path: '/detect',
+  },
+  Dataset: {
+    key: 'Dataset',
+    name: 'Dataset',
+    path: '',
+  },
+  DatasetInformation: {
+    key: 'DatasetInformation',
+    name: 'Information',
+    path: '/dataset/info',
+  },
+  DatasetTweets: {
+    key: 'DatasetTweets',
+    name: 'Tweets dataset',
+    path: '/dataset/tweets',
+  },
+};
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -96,13 +97,12 @@ const RootScreen: React.FC = () => {
         collapsed={collapsed}
         onCollapse={(value) => setCollapsed(value)}
       >
-        <div
-          style={{
-            height: 32,
-            margin: 16,
-            background: 'rgba(255, 255, 255, 0.2)',
-          }}
-        />
+        <div style={{ margin: 16, color: 'white', display: 'flex', flexDirection: 'row', columnGap: '1rem', alignItems: 'center', justifyContent: collapsed ? 'center' : 'flex-start' }}>
+          <img src={logo} style={{ width: 16, filter: 'invert(1)' }} />
+          <div style={{ display: collapsed ? 'none' : 'block' }}>
+            <b>SNS Fake Content</b>
+          </div>
+        </div>
         <Menu
           theme="dark"
           defaultSelectedKeys={['Home']}
