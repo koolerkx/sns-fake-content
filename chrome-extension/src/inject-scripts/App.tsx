@@ -33,9 +33,6 @@ const App = () => {
             position: 'absolute',
             left: `${paddedX}px`,
             top: isHighlighting || isInside ? `${paddedY}px` : `${paddedY + 16}px`,
-            // fading transition
-            transition: 'all 500ms cubic-bezier(0.000, 1, 0.000, 1)',
-            transitionTimingFunction: 'cubic-bezier(0.000, 1, 0.000, 1)',
             // on top of everything
             zIndex: 1000,
         }}>
