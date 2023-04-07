@@ -11,7 +11,12 @@ const HistoryItem: React.FC<Awaited<ReturnType<typeof getHistoryList>>[number]> 
     return (
         <Alert
             message={`Detection at ${props.createdAt.split('T').shift()}`}
-            description={`The detected text "${props.text.substring(0, 40)}" has only ${(props.score * 100).toFixed(2)}% chance to be true`}
+            description={
+                <span>
+                    The creditability of the message <i>"{props.text.slice(0, 40)}{props.text.length > 40 && '...'}"</i> is <b>{(props.score * 100).toFixed(2)}%</b>.
+                    Hence It should be a <b>{props.score > .5 ? "true" : "false"}</b> message.
+                </span>
+            }
             type={option}
             showIcon
         />
