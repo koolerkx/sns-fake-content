@@ -7,7 +7,7 @@ services:
       args:
         - VITE_API_ENDPOINT=http://localhost:3000/v1
     ports:
-      - "5173:5173"
+      - "80:5173"
 
   express:
     build:
