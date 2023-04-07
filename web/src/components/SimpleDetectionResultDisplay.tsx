@@ -17,7 +17,12 @@ const SimpleDetectionResultDisplay = () => {
     return (
         <Alert
             type={type}
-            message={`The creditability of this message is ${(score * 100).toFixed(2)}%.\n Hence It should be a ${score > .5} message.`}
+            message={
+                <span>
+                    The creditability of this message is <b>{(score * 100).toFixed(2)}%</b>.
+                    Hence It should be a <b>{score > .5 ? "true" : "false"}</b> message.
+                </span>
+            }
         />
     );
 }
