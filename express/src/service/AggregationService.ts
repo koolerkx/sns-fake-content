@@ -1,8 +1,6 @@
-import mockPercentages from '../mock/tweet-sum-group-by-label.json';
 import mockWordCloud from '../mock/word-cloud.json';
 import mockTop20TrueTags from '../mock/tag-true-top-20.json';
 import mockTop20FalseTags from '../mock/tag-false-top-20.json';
-import mockLikeCountStats from '../mock/like-count-stat.json';
 import { prisma } from '../utils/db';
 
 export class AggregationService {
@@ -16,24 +14,69 @@ export class AggregationService {
     }
 
     async getLikeCountStats() {
-        return mockLikeCountStats;
+        const raw = await prisma.tweets.aggregateRaw({
+            pipeline: [
+                {
+                    $group: {
+                        _id: null,
+                        count: { $sum: 1 },
+                        null_count: {
+                            $sum: {
+                            $cond: {
+                                if: { $eq: ["$like_count", null] },
+                                then: 1,
+                                else: 0
+                            }
+                            }
+                        },
+                        mean: { $avg: "$like_count" },
+                        std: { $stdDevSamp: "$like_count" },
+                        min: { $min: "$like_count" },
+                        max: { $max: "$like_count" },
+                    }
+                }
+
+            ],
+            options: {
+                allowDiskUse: true,
+            }
+        });
+
+        const { _id, ...rest }: {
+            _id: null,
+            count: number;
+            null_count: number;
+            mean: number;
+            std: number;
+            min: number;
+            max: number;
+        } = (raw as any)[0];
+
+        const ret = {
+            ...rest,
+            median: 0,
+        };
+
+        return Object.keys(ret).map(e => ({
+            describe: e,
+            like_count: ret[e as keyof typeof ret],
+        }));
     }
 
     async getPercentagesOfTweetsGroupByLabel() {
-        return mockPercentages;
-
-        // return await TweetModel.aggregate([
-        //     { $limit: 100000 },
-        //     { $match: {
-        //         label: 'true'
-        //     } },
-        //     {
-        //         $group: {
-        //             _id: "$label",
-        //             count: { $sum: 1 }
-        //         }
-        //     },
-        // ], { allowDiskUse: true });
+        return await prisma.tweets.aggregateRaw({
+            pipeline: [
+                {
+                    $group: {
+                        _id: "$label",
+                        count: { $sum: 1 }
+                    }
+                },
+            ],
+            options: {
+                allowDiskUse: true,
+            }
+        });
     }
 
     async getWordCloud() {
