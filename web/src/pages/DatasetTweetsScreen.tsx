@@ -3,18 +3,17 @@ import { useQuery } from "react-query";
 import getLikeCountStats from "../api/getLikeCountStats";
 import getTop20FalseTags from "../api/getTop20FalseTags";
 import getTop20TrueTags from "../api/getTop20TrueTags";
-import { TreemapChart, PieChart, WordCloudChart } from "@opd/g2plot-react";
-import getPercentagesOfTweetsGroupByLabel from "../api/getPercentagesOfTweetsGroupByLabel";
+import { TreemapChart, WordCloudChart } from "@opd/g2plot-react";
 import getWordCloud from "../api/getWordCloud";
+import DatasetLabelComparisonChart from "../components/DatasetLabelComparisonChart";
 
 const { Title } = Typography;
 
 const DatasetTweetsScreen = () => {
 
-    const { data: likeCountStats } = useQuery('getLikeCountStats', getLikeCountStats);
+    const { data: likeCountStats, isLoading: isLikeCountLoading } = useQuery('getLikeCountStats', getLikeCountStats);
     const { data: top20TrueTags } = useQuery('getTop20TrueTags', getTop20TrueTags);
     const { data: top20FalseTags } = useQuery('getTop20FalseTags', getTop20FalseTags);
-    const { data: percentages } = useQuery('getPercentagesOfTweetsGroupByLabel', getPercentagesOfTweetsGroupByLabel);
     const { data: wordCloudData } = useQuery('getWordCloud', getWordCloud);
 
     return (
@@ -35,31 +34,31 @@ const DatasetTweetsScreen = () => {
                                 <Col sm={24} md={12}>
                                     <Statistic
                                         title="The count of all tweets"
-                                        value={likeCountStats?.find(e => e.describe === 'count')?.like_count || '0'}
+                                        value={isLikeCountLoading ? "Loading..." : likeCountStats?.find(e => e.describe === 'count')?.like_count || '0'}
                                     />
                                 </Col>
                                 <Col sm={24} md={12}>
                                     <Statistic
                                         title="The mean of all tweets' likes count"
-                                        value={likeCountStats?.find(e => e.describe === 'mean')?.like_count || '0'}
+                                        value={isLikeCountLoading ? "Loading..." : likeCountStats?.find(e => e.describe === 'mean')?.like_count || '0'}
                                     />
                                 </Col>
                                 <Col sm={24} md={12}>
                                     <Statistic
                                         title="The medium of all tweets' likes count"
-                                        value={likeCountStats?.find(e => e.describe === 'medium')?.like_count || '0'}
+                                        value={isLikeCountLoading ? "Loading..." : likeCountStats?.find(e => e.describe === 'medium')?.like_count || '0'}
                                     />
                                 </Col>
                                 <Col sm={24} md={12}>
                                     <Statistic
                                         title="The standard deviation of all tweets' likes count"
-                                        value={likeCountStats?.find(e => e.describe === 'std')?.like_count || '0'}
+                                        value={isLikeCountLoading ? "Loading..." : likeCountStats?.find(e => e.describe === 'std')?.like_count || '0'}
                                     />
                                 </Col>
                                 <Col sm={24} md={12}>
                                     <Statistic
                                         title="The maximum of all tweets' likes count"
-                                        value={likeCountStats?.find(e => e.describe === 'max')?.like_count || '0'}
+                                        value={isLikeCountLoading ? "Loading..." : likeCountStats?.find(e => e.describe === 'max')?.like_count || '0'}
                                     />
                                 </Col>
                             </Row>
@@ -81,7 +80,7 @@ const DatasetTweetsScreen = () => {
 
                     <Col sm={24} md={12}>
                         <Card title="The label distribution across the all tweets">
-                            <PieChart angleField={"count"} colorField={"_id"} data={percentages} />
+                            <DatasetLabelComparisonChart />
                         </Card>
                     </Col>
 

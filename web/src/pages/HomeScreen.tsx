@@ -1,13 +1,13 @@
 import { Card, Col, Divider, Row, Typography } from "antd";
-import { WordCloudChart, PieChart } from '@opd/g2plot-react';
+import { WordCloudChart } from '@opd/g2plot-react';
 import { useRef } from "react";
 import { useQuery } from "react-query";
 import getWordCloud from "../api/getWordCloud";
-import getPercentagesOfTweetsGroupByLabel from "../api/getPercentagesOfTweetsGroupByLabel";
 import DetectionInput from "../components/DetectionInput";
 import SimpleDetectionResultDisplay from "../components/SimpleDetectionResultDisplay";
 import { Link } from "react-router-dom";
 import StatisticComponent from "../components/StatisticComponent";
+import DatasetLabelComparisonChart from "../components/DatasetLabelComparisonChart";
 const { Title, Paragraph } = Typography;
 
 const HomeScreen = (): React.ReactElement => {
@@ -15,7 +15,6 @@ const HomeScreen = (): React.ReactElement => {
   const ref = useRef<any>();
 
   const { data } = useQuery('getWordCloud', getWordCloud);
-  const { data: test } = useQuery('getPercentagesOfTweetsGroupByLabel', getPercentagesOfTweetsGroupByLabel);
 
   return (
     <div>
@@ -59,24 +58,31 @@ const HomeScreen = (): React.ReactElement => {
         </Col>
 
         <Col sm={24} md={11}>
-          <Card title="Text Detection">
+          <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            rowGap: '1rem'
+          }}>
+            <Card title="Text Detection">
+              <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                rowGap: '1rem'
+              }}>
+                <DetectionInput />
 
-            <div style={{
-              display: 'flex',
-              flexDirection: 'column',
-              rowGap: '1rem'
-            }}>
-              <DetectionInput />
+                <div>
+                  <Link to="/detect">Goto detection page for more flexible and versatile options.</Link>
+                </div>
 
-              <div>
-                <Link to="/detect">Goto detection page for more flexible and versatile options.</Link>
+                <SimpleDetectionResultDisplay />
               </div>
+            </Card>
 
-              <SimpleDetectionResultDisplay />
-
-              <PieChart angleField={"count"} colorField={"_id"} data={test} />
-            </div>
-          </Card>
+            <Card title="Dataset Label">
+              <DatasetLabelComparisonChart />
+            </Card>
+          </div>
         </Col>
       </Row>
     </div>

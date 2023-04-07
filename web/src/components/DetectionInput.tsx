@@ -1,4 +1,4 @@
-import { Button, Input, Select } from 'antd';
+import { Button, Input, Select, Spin } from 'antd';
 import { useMemo, useState } from 'react';
 const { TextArea } = Input;
 import { useMutation, useQueryClient } from 'react-query';
@@ -28,7 +28,7 @@ const DetectionInput: React.FC<DetectionInputProps> = (props) => {
 	const store = useNonpersistentDetectionOutputStore();
 	const [text, setText] = useState('');
 	const queryClient = useQueryClient();
-	const { mutate } = useMutation(detectText, { onSuccess: (e) => {
+	const { mutate, isLoading } = useMutation(detectText, { onSuccess: (e) => {
 		queryClient.refetchQueries('getHistoryList');
 		store.setText(e.text);
 		store.setType(e.type);
@@ -79,11 +79,13 @@ const DetectionInput: React.FC<DetectionInputProps> = (props) => {
 					flexDirection: 'row',
 					columnGap: '1rem',
 				}}>
-					<Button type="primary" onClick={() => text && mutate({ type, text })}>
+					<Button type="primary" onClick={() => text && mutate({ type, text })} disabled={isLoading}>
+						{isLoading && <Spin/>}
 						Detect
 					</Button>
 
-					<Button type="primary" onClick={() => setText("")}>
+					<Button type="primary" onClick={() => setText("")} disabled={isLoading}>
+						{isLoading && <Spin/>}
 						Reset
 					</Button>
 				</div>
