@@ -51,7 +51,8 @@ const App = () => {
                         </div>
                     ): data ? (
                         <div>
-                            this text is likely {(data.data * 100).toFixed(2)}% would be fake. [by model `{data.type}`]
+                            The creditability of this message is <b>{(data.data * 100).toFixed(2)}%</b>.
+                            Hence It should be a <b>{data.data > .5 ? "true" : "false"}</b> message.
                         </div>
                     ) : isLoading ? (
                         <div>
