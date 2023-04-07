@@ -1,10 +1,169 @@
-import { Button, Input, Select, Spin } from 'antd';
+import { Button, Cascader, Input, Select, Spin } from 'antd';
 import { useMemo, useState } from 'react';
 const { TextArea } = Input;
 import { useMutation, useQueryClient } from 'react-query';
 import { create } from 'zustand';
 import detectText from '../api/detectText';
 import History from '../types/History';
+
+type Option = {
+	value: string | number;
+	label: string;
+	children?: Option[];
+}
+
+const options: Option[] = [
+	{
+		label: "BOW",
+		value: "bow",
+		children: [
+			{
+				label: "Naive Bayes",
+				value: "nb",
+				children: [],
+			},
+			{
+				label: "Logistic Regression",
+				value: "lr",
+				children: [],
+			},
+			{
+				label: "Decision Tree",
+				value: "dt",
+				children: [],
+			},
+			{
+				label: "Random Forest",
+				value: "rf",
+				children: [],
+			},
+			{
+				label: "Support Vector Machine",
+				value: "svm",
+				children: [],
+			},
+		],
+	},
+	{
+		label: "TF-IDF",
+		value: "tfidf",
+		children: [
+			{
+				label: "Naive Bayes",
+				value: "nb",
+				children: [],
+			},
+			{
+				label: "Logistic Regression",
+				value: "lr",
+				children: [],
+			},
+			{
+				label: "Decision Tree",
+				value: "dt",
+				children: [],
+			},
+			{
+				label: "Random Forest",
+				value: "rf",
+				children: [],
+			},
+			{
+				label: "Support Vector Machine",
+				value: "svm",
+				children: [],
+			},
+		],
+	},
+	{
+		label: "Word2Vec",
+		value: "word2vec",
+		children: [
+			{
+				label: "Naive Bayes",
+				value: "nb",
+				children: [],
+			},
+			{
+				label: "Logistic Regression",
+				value: "lr",
+				children: [],
+			},
+			{
+				label: "Decision Tree",
+				value: "dt",
+				children: [],
+			},
+			{
+				label: "Random Forest",
+				value: "rf",
+				children: [],
+			},
+			{
+				label: "Support Vector Machine",
+				value: "svm",
+				children: [],
+			},
+			{
+				label: "RNN GRU",
+				value: "rnn",
+				children: [],
+			},
+		],
+	},
+	{
+		label: "FastText",
+		value: "fasttext",
+		children: [
+			{
+				label: "Naive Bayes",
+				value: "nb",
+				children: [],
+			},
+			{
+				label: "Logistic Regression",
+				value: "lr",
+				children: [],
+			},
+			{
+				label: "Decision Tree",
+				value: "dt",
+				children: [],
+			},
+			{
+				label: "Random Forest",
+				value: "rf",
+				children: [],
+			},
+			{
+				label: "Support Vector Machine",
+				value: "svm",
+				children: [],
+			},
+			{
+				label: "RNN GRU",
+				value: "rnn",
+				children: [],
+			},
+		],
+	},
+	{
+		label: "Transformer",
+		value: "transformer",
+		children: [
+			{
+				label: "BERT",
+				value: "bert",
+				children: [],
+			}, {
+				label: "XLNet",
+				value: "xlnet",
+				children: [],
+			},
+		],
+	},
+];
+
 
 export const useNonpersistentDetectionOutputStore = create<History & {
 	setType: (e: History['type']) => void;
@@ -34,20 +193,7 @@ const DetectionInput: React.FC<DetectionInputProps> = (props) => {
 		store.setType(e.type);
 		store.setScore(e.data);
 	} });
-	const options = useMemo(() => [
-		{ value: 'tfidf-svm', label: 'TFIDF SVM' },
-		{ value: 'tfidf-nb', label: 'TFIDF naive bayes' },
-		{ value: 'tfidf-rf', label: 'TFIDF random forest' },
-		{ value: 'tfidf-cnn', label: 'TFIDF CNN' },
-		{ value: 'tfidf-rnn', label: 'TFIDF RNN' },
-		{ value: 'word2vec-svm', label: 'Word2Vec SVM' },
-		{ value: 'word2vec-rf', label: 'Word2Vec random forest' },
-		{ value: 'word2vec-cnn', label: 'Word2Vec CNN' },
-		{ value: 'word2vec-rnn', label: 'Word2Vec RNN' },
-		{ value: 'xlnet', label: 'XLNet' },
-		{ value: 'bert', label: 'BERT' },
-	], []);
-	const [type, setType] = useState(options.at(0)?.value || 'tfidf-svm');
+	const [type, setType] = useState('tfidf-svm');
 
 	return (
 		<>
@@ -67,11 +213,10 @@ const DetectionInput: React.FC<DetectionInputProps> = (props) => {
 				marginTop: '1.5rem',
 			}}>
 				{props.showModelList && <span>
-					<Select
-						defaultValue="lucy"
-						onChange={(e) => setType(e)}
-						value={type}
+					<Cascader
+						onChange={(e) => setType(e.join('-'))}
 						options={options}
+						defaultValue={["tfidf", "svm"]}
 					/>
 				</span>}
 				<div style={{
