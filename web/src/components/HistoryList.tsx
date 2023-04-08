@@ -1,4 +1,4 @@
-import { Alert, Card } from "antd";
+import { Alert, Card, Spin } from "antd";
 import { useQuery } from "react-query";
 import getHistoryList from "../api/getHistoryList";
 
@@ -25,7 +25,7 @@ const HistoryItem: React.FC<Awaited<ReturnType<typeof getHistoryList>>[number]> 
 
 const HistoryList = () => {
 
-    const { data, isError, error } = useQuery('getHistoryList', getHistoryList);
+    const { data, isLoading, isError, error } = useQuery('getHistoryList', getHistoryList, { refetchOnWindowFocus: true });
 
     return (
         <Card title="History">
@@ -34,6 +34,7 @@ const HistoryList = () => {
                 flexDirection: 'column',
                 rowGap: '1rem',
             }}>
+                { isLoading && <Spin/> }
                 {
                     isError && error instanceof Error ? (
                         <div>
