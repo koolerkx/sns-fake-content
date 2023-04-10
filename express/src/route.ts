@@ -18,6 +18,10 @@ aggregationRouter.get('/getTop10ContentWordsGroupByLabel', aggregationController
 aggregationRouter.get('/getTop10AnnotationWordsGroupByLabel', aggregationController.getTop10AnnotationWordsGroupByLabel);
 aggregationRouter.get('/getContentLengthWithPublicMetric', aggregationController.getContentLengthWithPublicMetric);
 aggregationRouter.get('/getAnnotationTypes', aggregationController.getAnnotationTypes);
+aggregationRouter.get('/getDescriptionLengthWithPublicMetric', aggregationController.getDescriptionLengthWithPublicMetric);
+aggregationRouter.get('/getTop10UserWordsGroupByLabel', aggregationController.getTop10UserWordsGroupByLabel);
+aggregationRouter.get('/getUserCreatedCountThroughTime', aggregationController.getUserCreatedCountThroughTime);
+aggregationRouter.get('/getPercentagesOfUsersGroupByLabel', aggregationController.getPercentagesOfUsersGroupByLabel);
 aggregationRouter.get('/getDetectionCount', aggregationController.getDetectionCount);
 aggregationRouter.get('/getDatasetCount', aggregationController.getDatasetCount);
 aggregationRouter.get('/getLikeCountStats', aggregationController.getLikeCountStats);

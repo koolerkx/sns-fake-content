@@ -78,6 +78,22 @@ export class AggregationService {
         });
     }
 
+    async getPercentagesOfUsersGroupByLabel() {
+        return await prisma.dummy_users_label.aggregateRaw({
+            pipeline: [
+                {
+                    $group: {
+                    _id: { $ifNull: [ "$label", true ] },  // Use true if label is null
+                    count: { $sum: "$count" }  // Sum the count field
+                    }
+                }
+            ],
+            options: {
+                allowDiskUser: true,
+            }
+        });
+    };
+
     async getPercentagesOfPossibleSensitiveContent() {
         return await prisma.tweets.aggregateRaw({
             pipeline: [
@@ -190,6 +206,16 @@ export class AggregationService {
                 count: true,
             }
         });
+    }
+
+    getUserCreatedCountThroughTime = async () => {
+        return (await prisma.dummy_users_label.findMany({
+            select: {
+                label: true,
+                year: true,
+                count: true,
+            },
+        })).map(({ year, ...e }) => ({ ...e, label: '' + (e.label ?? 'true'), created_at: year }));
     }
 
     getDataAmountThroughTime = async () => {
@@ -369,6 +395,55 @@ export class AggregationService {
         });
     }
 
+    getTop10UserWordsGroupByLabel = async () => {
+        return await prisma.dummy_users_description_word.aggregateRaw({
+            pipeline: [
+                {
+                    $group: {
+                        _id: "$processed_description",
+                        count: { $sum: "$count" },
+                        true_count: {
+                            $sum: {
+                                $cond: {
+                                    if: { $eq: ["$label", true] },
+                                    then: "$count",
+                                    else: 0
+                                }
+                            }
+                        },
+                        false_count: {
+                            $sum: {
+                                $cond: {
+                                    if: { $eq: ["$label", false] },
+                                    then: "$count",
+                                    else: 0
+                                }
+                            }
+                        }
+                    }
+                },
+                {
+                    $sort: {
+                        count: -1
+                    }
+                },
+                {
+                    $limit: 10
+                },
+                {
+                    $project: {
+                        _id: 0,
+                        processed_text: "$_id",
+                        count: 1,
+                        true_count: 1,
+                        false_count: 1,
+                    }
+                },
+            ],
+            options: {
+                allowDiskUse: true,
+            }
+        });
     }
 
     async getDetectionCount() {
@@ -415,5 +490,25 @@ export class AggregationService {
             }
         });
     };
+
+    getDescriptionLengthWithPublicMetric = async () => {
+        return await prisma.dummy_users_description_length.aggregateRaw({
+            pipeline: [
+                {
+                    $project: {
+                        _id: 0,
+                        processed_description_length: 1,
+                        label: 1,
+                        tweet_count: 1,
+                        followers_count: 1,
+                        following_count: 1,
+                    }
+                },
+                {
+                    $sample: { size: 1000 }
+                }
+            ]
+        });
+    }
 
 }
