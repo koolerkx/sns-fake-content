@@ -1,30 +1,46 @@
 import { LineChart } from "@opd/g2plot-react";
-import { Card, Col, Divider, Row, Typography } from "antd";
+import { Card, Col, Divider, Row, Spin, Typography } from "antd";
 import { useQuery } from "react-query";
 const { Title } = Typography;
-import { TreemapChart, WordCloudChart } from "@opd/g2plot-react";
+import { WordCloudChart } from "@opd/g2plot-react";
 import getWordCloud from "../api/getWordCloud";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
+import PossibleSensitiveContentDistributionChart from "../components/PossibleSensitiveContent";
+import DatasetLabelComparisonChart from "../components/DatasetLabelComparisonChart";
+import { DatasetStatisticalInfo } from "../components/DatasetStatisticalInfo";
+import getDataAmountThroughTime from "../api/getDataAmountThroughTime";
 
-const fetchFake = async () => {
-    const res = await fetch('https://gw.alipayobjects.com/os/bmw-prod/55424a73-7cb8-4f79-b60d-3ab627ac5698.json');
-    const proc = (await res.json()) as { year: string; value: number; category: string; }[];
-    return proc
-        .filter(e => ['Solid fuel', 'Cement production'].includes(e.category))
-        .map(e=> ({
-            ...e,
-            category: e.category === 'Solid fuel' ? 'true' : 'false',
-        }));
+const DataAmountThroughTimeChart = () => {
+
+    const { data, isLoading } = useQuery('getDataAmountThroughTime', getDataAmountThroughTime);
+
+    useEffect(() => {
+        console.log(data);
+    }, [data]);
+
+    if (isLoading) {
+        return (
+            <Spin />
+        );
+    }
+
+    return (
+        <LineChart
+            data={data?.sort((a, b) => a.created_at - b.created_at)?.map(e => ({ ...e, created_at: ""+ e.created_at })) || []}
+            xField="created_at"
+            yField="count"
+            seriesField="label"
+            xAxis={{
+                type: 'time',
+            }}
+        />
+    );
 }
 
 const DatasetInfoScreen = () => {
 
-    // const { data } = useQuery('getPercentagesOfTweetsGroupByLabel', getPercentagesOfTweetsGroupByLabel);
-    const { data } = useQuery('fetchFake', fetchFake);
-
     const wordCloudRef = useRef<any>();
-    const treemapRef = useRef<any>();
-    const { data: wordCloudData } = useQuery('getWordCloud', getWordCloud);
+    const { data: wordCloudData } = useQuery('getWordCloud', () => getWordCloud());
 
     return (
         <div>
@@ -41,41 +57,43 @@ const DatasetInfoScreen = () => {
                         flexDirection: 'column',
                         rowGap: '1rem',
                     }}>
-                        <Card title="Word Cloud">
-                            <WordCloudChart
-                                chartRef={wordCloudRef}
-                                data={wordCloudData || []}
-                                wordField="_id"
-                                weightField="total"
-                                colorField="_id"
-                            />
+                        <DatasetStatisticalInfo />
+
+                        <Card title="Label distribution">
+                            <DatasetLabelComparisonChart />
                         </Card>
 
-                        <Card title="time series based label growth">
-                            <LineChart
-                                data={data || []}
-                                xField="year"
-                                yField="value"
-                                seriesField="category"
-                                xAxis={{
-                                    type: 'time',
-                                }}
-                            />
+                        <Card title="Possible Distribution">
+                            <PossibleSensitiveContentDistributionChart />
                         </Card>
                     </div>
                 </Col>
 
                 <Col sm={24} md={12}>
-                    <Card title="Tree map">
-                        <TreemapChart
-                            chartRef={treemapRef}
-                            data={{
-                                name: 'root',
-                                children: wordCloudData?.map(e => ({ name: e._id, value: e.total })) || []
-                            }}
-                            colorField="name"
-                        />
-                    </Card>
+                    <div style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        rowGap: '1rem',
+                    }}>
+                        <Card title="time series based label growth">
+                            <Title style={{ marginTop: 0 }}>FakeNewsNet</Title>
+                            <a href="https://github.comKaiDMML/FakeNewsNet">https://github.comKaiDMML/FakeNewsNet</a>
+                        </Card>
+
+                        <Card title="Data amount through time">
+                            <DataAmountThroughTimeChart />
+                        </Card>
+
+                        <Card title="Word Cloud">
+                            <WordCloudChart
+                                chartRef={wordCloudRef}
+                                data={wordCloudData || []}
+                                wordField="processed_text"
+                                weightField="count"
+                                colorField="processed_text"
+                            />
+                        </Card>
+                    </div>
                 </Col>
             </Row>
         </div>

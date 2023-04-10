@@ -11,7 +11,7 @@ const DatasetLabelComparisonChart = () => {
   }
 
   return (
-    <PieChart angleField={"count"} colorField={"_id"} data={data} />
+    <PieChart angleField={"count"} colorField={"_id"} data={data} innerRadius={0.6} />
   );
 };
 
