@@ -43,35 +43,35 @@ export class AggregationController {
         res.json(await this.aggregationService.getTweetsStatistic());
     }
 
-    getLabelDistributionThroughTime = async (_: Request, res: Response) => {
-        res.json(await this.aggregationService.getLabelDistributionThroughTime());
+    getLabelDistributionThroughTime = async (req: Request, res: Response) => {
+        res.json(await this.aggregationService.getLabelDistributionThroughTime(req.query.label as any));
     }
 
     getUserCreatedCountThroughTime = async (_: Request, res: Response) => {
         res.json(await this.aggregationService.getUserCreatedCountThroughTime());
     }
 
-    getDataAmountThroughTime = async (_: Request, res: Response) => {
-        res.json(await this.aggregationService.getDataAmountThroughTime());
+    getDataAmountThroughTime = async (req: Request, res: Response) => {
+        res.json(await this.aggregationService.getDataAmountThroughTime(req.query.label as any));
     }
 
-    getTop10ContentWordsGroupByLabel = async (_: Request, res: Response) => {
-        res.json(await this.aggregationService.getTop10ContentWordsGroupByLabel());
+    getTop10ContentWordsGroupByLabel = async (req: Request, res: Response) => {
+        res.json(await this.aggregationService.getTop10ContentWordsGroupByLabel(req.query.label as any));
     }
 
-    getTop10AnnotationWordsGroupByLabel = async (_: Request, res: Response) => {
-        res.json(await this.aggregationService.getTop10AnnotationWordsGroupByLabel());
+    getTop10AnnotationWordsGroupByLabel = async (req: Request, res: Response) => {
+        res.json(await this.aggregationService.getTop10AnnotationWordsGroupByLabel(req.query.label as any));
     }
     getTop10UserWordsGroupByLabel = async (_: Request, res: Response) => {
         res.json(await this.aggregationService.getTop10UserWordsGroupByLabel());
     }
 
-    getContentLengthWithPublicMetric = async (_: Request, res: Response) => {
-        res.json(await this.aggregationService.getContentLengthWithPublicMetric());
+    getContentLengthWithPublicMetric = async (req: Request, res: Response) => {
+        res.json(await this.aggregationService.getContentLengthWithPublicMetric(req.query.label as any));
     }
 
-    getAnnotationTypes = async (_: Request, res: Response) => {
-        res.json(await this.aggregationService.getAnnotationTypes());
+    getAnnotationTypes = async (req: Request, res: Response) => {
+        res.json(await this.aggregationService.getAnnotationTypes(req.query.label as any));
     }
 
     getDescriptionLengthWithPublicMetric = async (_: Request, res: Response) => {
