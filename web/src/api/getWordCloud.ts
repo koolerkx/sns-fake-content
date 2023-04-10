@@ -1,7 +1,7 @@
-export default async () => {
-	const res = await fetch(`${import.meta.env.VITE_API_ENDPOINT}/aggregation/getWordCloud`);
+export default async (type: string = 'content') => {
+	const res = await fetch(`${import.meta.env.VITE_API_ENDPOINT}/aggregation/getWordCloud?` + new URLSearchParams({ type }));
     return await res.json() as {
-        _id: string;
-        total: number;
+        processed_text: string;
+        count: number;
     }[];
 }
