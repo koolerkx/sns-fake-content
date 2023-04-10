@@ -5,6 +5,7 @@ import {
   FileTextOutlined,
   InfoCircleOutlined,
   TwitterOutlined,
+  UserOutlined,
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Layout, Menu, theme } from 'antd';
@@ -40,6 +41,11 @@ const ScreenInfo: Record<string, { key: string; name: string; path: string }> =
     name: 'Tweets dataset',
     path: '/dataset/tweets',
   },
+  DatasetUsers: {
+    key: 'DatasetUsers',
+    name: 'Users dataset',
+    path: '/dataset/users',
+  },
 };
 
 type MenuItem = Required<MenuProps>['items'][number];
@@ -69,6 +75,11 @@ const items: MenuItem[] = [
         key: ScreenInfo.DatasetTweets.key,
         icon: <TwitterOutlined />,
         label: ScreenInfo.DatasetTweets.name,
+      },
+      {
+        key: ScreenInfo.DatasetUsers.key,
+        icon: <UserOutlined />,
+        label: ScreenInfo.DatasetUsers.name,
       },
     ],
   },
