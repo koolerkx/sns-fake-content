@@ -1,6 +1,6 @@
 import { useNonpersistentDetectionOutputStore } from "./DetectionInput";
 import { Alert } from 'antd';
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 
 type AlertType = 'success' | 'info' | 'error' | 'warning';
 
