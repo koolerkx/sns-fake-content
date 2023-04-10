@@ -1,6 +1,6 @@
-from model_process.tf_idf import NaiveBayesModelWrapper, LogisticRegressionModelWrapper, DecisionTreeModelWrapper, RandomForestModelWrapper, SupportVectorMachineModelWrapper
+from model_process.count import NaiveBayesModelWrapper, LogisticRegressionModelWrapper, DecisionTreeModelWrapper, RandomForestModelWrapper, SupportVectorMachineModelWrapper
 
-class DetectionTFIDFService():
+class DetectionCountService():
     AVAILABLE_MODEL_LIST = [
         NaiveBayesModelWrapper(),
         LogisticRegressionModelWrapper(),

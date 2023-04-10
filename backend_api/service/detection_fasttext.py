@@ -1,4 +1,4 @@
-from model_process.word2vec import (
+from model_process.fasttext import (
     NaiveBayesModelWrapper,
     LogisticRegressionModelWrapper,
     DecisionTreeModelWrapper,
@@ -8,7 +8,7 @@ from model_process.word2vec import (
 )
 
 
-class DetectionWord2VecService:
+class DetectionFastTextService:
     AVAILABLE_MODEL_LIST = [
         NaiveBayesModelWrapper(),
         LogisticRegressionModelWrapper(),

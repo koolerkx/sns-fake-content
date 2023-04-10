@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
 import { HistoryService } from "../service/HistoryService";
-import { ModelDetectionService } from "../service/ModelDetectionService";
+import { BackendModelDetectionService } from "../service/BackendModelDetectionService";
 
-export class ModelDetectionController {
+export class BackendDetectionController {
   constructor(
-    private modelDetectionService: ModelDetectionService = new ModelDetectionService(),
+    private modelDetectionService: BackendModelDetectionService = new BackendModelDetectionService(),
     private historyService: HistoryService = new HistoryService()
   ) {}
 
