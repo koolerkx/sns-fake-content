@@ -29,5 +29,6 @@ model/archive/training/transformer/data
 model/archive/training/transformer/model
 model/input
 model/output/model_nn
+backend_api/model_file
 
 **Zone.Identifier
