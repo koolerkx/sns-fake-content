@@ -19,12 +19,48 @@ export class AggregationController {
         res.json(await this.aggregationService.getLikeCountStats());
     }
 
-    getWordCloud = async (_: Request, res: Response) => {
-        res.json(await this.aggregationService.getWordCloud());
+    getWordCloud = async (req: Request, res: Response) => {
+        res.json(await this.aggregationService.getWordCloud(req.query.type as string));
     }
     
     getPercentagesOfTweetsGroupByLabel = async (_: Request, res: Response) => {
         res.json(await this.aggregationService.getPercentagesOfTweetsGroupByLabel());
+    }
+
+    getPercentagesOfPossibleSensitiveContent = async (_: Request, res: Response) => {
+        res.json(await this.aggregationService.getPercentagesOfPossibleSensitiveContent());
+    }
+
+    getDatasetStatistics = async (_: Request, res: Response) => {
+        res.json(await this.aggregationService.getDatasetStatistics());
+    }
+
+    getTweetsStatistic = async  (_: Request, res: Response) => {
+        res.json(await this.aggregationService.getTweetsStatistic());
+    }
+
+    getLabelDistributionThroughTime = async (_: Request, res: Response) => {
+        res.json(await this.aggregationService.getLabelDistributionThroughTime());
+    }
+
+    getDataAmountThroughTime = async (_: Request, res: Response) => {
+        res.json(await this.aggregationService.getDataAmountThroughTime());
+    }
+
+    getTop10ContentWordsGroupByLabel = async (_: Request, res: Response) => {
+        res.json(await this.aggregationService.getTop10ContentWordsGroupByLabel());
+    }
+
+    getTop10AnnotationWordsGroupByLabel = async (_: Request, res: Response) => {
+        res.json(await this.aggregationService.getTop10AnnotationWordsGroupByLabel());
+    }
+
+    getContentLengthWithPublicMetric = async (_: Request, res: Response) => {
+        res.json(await this.aggregationService.getContentLengthWithPublicMetric());
+    }
+
+    getAnnotationTypes = async (_: Request, res: Response) => {
+        res.json(await this.aggregationService.getAnnotationTypes());
     }
 
     getDetectionCount = async (_: Request, res: Response) => {
