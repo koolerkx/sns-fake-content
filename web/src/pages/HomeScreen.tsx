@@ -49,7 +49,7 @@ const HomeScreen = (): React.ReactElement => {
           </div>
         </Col>
 
-        <Col sm={24} md={11}>
+        <Col sm={24} md={12}>
           <div style={{
             display: 'flex',
             flexDirection: 'column',
