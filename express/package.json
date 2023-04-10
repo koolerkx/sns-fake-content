@@ -7,7 +7,8 @@
     "start": "nodemon src/app.ts",
     "build": "tsc --project ./",
     "test": "tsc --noEmit && eslint 'src/*.ts'",
-    "serve": "node ./build/app.js"
+    "serve": "node ./build/app.js",
+    "codegen": "npx prisma generate"
   },
   "author": "Kooler Fan",
   "license": "ISC",
