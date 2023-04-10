@@ -1,17 +1,12 @@
-from utils.str_to_number import str_to_number
-from model_process.tf_idf_svm import TFIDFSVMModelWrapper
-from model_process.tf_idf_naive_bayes import TFIDFNBModelWrapper
-from model_process.tf_idf_random_forest import TFIDFRFModelWrapper
-from model_process.tf_idf_cnn import TFIDFCNNModelWrapper
-from model_process.tf_idf_rnn import TFIDFRNNModelWrapper
+from model_process.tf_idf import NaiveBayesModelWrapper, LogisticRegressionModelWrapper, DecisionTreeModelWrapper, RandomForestModelWrapper, SupportVectorMachineModelWrapper
 
 class DetectionTFIDFService():
     AVAILABLE_MODEL_LIST = [
-        TFIDFSVMModelWrapper(),
-        TFIDFNBModelWrapper(),
-        TFIDFRFModelWrapper(),
-        TFIDFCNNModelWrapper(),
-        TFIDFRNNModelWrapper(),
+        NaiveBayesModelWrapper(),
+        LogisticRegressionModelWrapper(),
+        DecisionTreeModelWrapper(),
+        RandomForestModelWrapper(),
+        SupportVectorMachineModelWrapper()
     ]
 
     def detect(self, model_name: str, text: str):
