@@ -1,20 +1,27 @@
-import { Card, Col, Divider, Row, Statistic, Typography } from "antd";
+import { Card, Col, Divider, Row, Tabs, Typography } from "antd";
 import { useQuery } from "react-query";
-import getLikeCountStats from "../api/getLikeCountStats";
-import getTop20FalseTags from "../api/getTop20FalseTags";
-import getTop20TrueTags from "../api/getTop20TrueTags";
 import { TreemapChart, WordCloudChart } from "@opd/g2plot-react";
 import getWordCloud from "../api/getWordCloud";
 import DatasetLabelComparisonChart from "../components/DatasetLabelComparisonChart";
+import { DatasetStatisticalInfoForTweets } from "../components/DatasetStatisticalInfoForTweets";
+import { useEffect, useState } from "react";
+import { AnnotationTypesRoseChart } from "../components/AnnotationTypesRoseChart";
+import { ContentLengthWithPublicMetricScatterPlotChart } from "../components/ContentLengthWithPublicMetricScatterPlotChart";
+import { LabelDistributionThroughTimeChart } from "../components/LabelDistributionThroughTimeChart";
+import { PublicMetric } from "../components/PublicMetric";
+import { Top10ContentWordsBarChart } from "../components/Top10ContentWordsBarChart";
+import { Top10AnnotationWordsBarChart } from "../components/Top10AnnotationWordsBarChart";
 
 const { Title } = Typography;
 
 const DatasetTweetsScreen = () => {
 
-    const { data: likeCountStats, isLoading: isLikeCountLoading } = useQuery('getLikeCountStats', getLikeCountStats);
-    const { data: top20TrueTags } = useQuery('getTop20TrueTags', getTop20TrueTags);
-    const { data: top20FalseTags } = useQuery('getTop20FalseTags', getTop20FalseTags);
-    const { data: wordCloudData } = useQuery('getWordCloud', getWordCloud);
+    const [ type, setType ] = useState('content');
+    const { data, refetch } = useQuery('getWordCloud', () => getWordCloud(type));
+
+    useEffect(() => {
+        refetch();
+    }, [type]);
 
     return (
         <div>
@@ -28,84 +35,88 @@ const DatasetTweetsScreen = () => {
                 rowGap: '1rem',
             }}>
                 <Row gutter={16}>
-                    <Col sm={24} md={12}>
-                        <Card title="Basic like count analysis of the tweets dataset">
-                            <Row gutter={24}>
-                                <Col sm={24} md={12}>
-                                    <Statistic
-                                        title="The count of all tweets"
-                                        value={isLikeCountLoading ? "Loading..." : likeCountStats?.find(e => e.describe === 'count')?.like_count || '0'}
-                                    />
-                                </Col>
-                                <Col sm={24} md={12}>
-                                    <Statistic
-                                        title="The mean of all tweets' likes count"
-                                        value={isLikeCountLoading ? "Loading..." : likeCountStats?.find(e => e.describe === 'mean')?.like_count || '0'}
-                                    />
-                                </Col>
-                                <Col sm={24} md={12}>
-                                    <Statistic
-                                        title="The medium of all tweets' likes count"
-                                        value={isLikeCountLoading ? "Loading..." : likeCountStats?.find(e => e.describe === 'medium')?.like_count || '0'}
-                                    />
-                                </Col>
-                                <Col sm={24} md={12}>
-                                    <Statistic
-                                        title="The standard deviation of all tweets' likes count"
-                                        value={isLikeCountLoading ? "Loading..." : likeCountStats?.find(e => e.describe === 'std')?.like_count || '0'}
-                                    />
-                                </Col>
-                                <Col sm={24} md={12}>
-                                    <Statistic
-                                        title="The maximum of all tweets' likes count"
-                                        value={isLikeCountLoading ? "Loading..." : likeCountStats?.find(e => e.describe === 'max')?.like_count || '0'}
-                                    />
-                                </Col>
-                            </Row>
-                        </Card>
-                    </Col>
-                </Row>
+                    <Col sm={24} md={12} style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        rowGap: '1rem',
+                    }}>
+                        <DatasetStatisticalInfoForTweets />
 
-                <Row gutter={16}>
-                    <Col sm={24} md={12}>
-                        <Card title="Word Cloud">
-                            <WordCloudChart
-                                data={wordCloudData || []}
-                                wordField="_id"
-                                weightField="total"
-                                colorField="_id"
-                            />
-                        </Card>
-                    </Col>
-
-                    <Col sm={24} md={12}>
-                        <Card title="The label distribution across the all tweets">
+                        <Card title="Label Distribution">
                             <DatasetLabelComparisonChart />
                         </Card>
-                    </Col>
 
-                    <Col sm={24} md={12} style={{ marginTop: '1rem' }}>
-                        <Card title="Top 20 hashtags of true tweets">
-                            <TreemapChart
-                                data={{
-                                    name: 'root',
-                                    children: top20TrueTags?.map(e => ({ name: e.text, value: e.value })) || []
-                                }}
-                                colorField="name"
-                            />
+                        <Card title="Label Distribution through time">
+                            <LabelDistributionThroughTimeChart />
+                        </Card>
+
+                        <Card title="Public Metric">
+                            <PublicMetric />
                         </Card>
                     </Col>
 
-                    <Col sm={24} md={12} style={{ marginTop: '1rem' }}>
-                        <Card title="Top 20 hashtags of fake tweets">
-                            <TreemapChart
-                                data={{
-                                    name: 'root',
-                                    children: top20FalseTags?.map(e => ({ name: e.text, value: e.value })) || []
-                                }}
-                                colorField="name"
+                    <Col sm={24} md={12} style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        rowGap: '1rem',
+                    }}>
+                        <Card title="Word Cloud">
+                            <Tabs
+                                defaultActiveKey="1"
+                                type="card"
+                                onChange={(e) => setType(e)}
+                                items={[
+                                    { label: "Content" },
+                                    { label: "Context Entity" },
+                                    { label: "Context Domain" },
+                                    { label: "Annotation" },
+                                    { label: "HashTag" },
+                                    { label: "CashTag" },
+                                    { label: "URL" }
+                                ].map((e, i) => ({ ...e, key: e.label.split(" ").pop()?.toLowerCase() || `Tab ${i}`, }))}
+                            />
+
+                            <WordCloudChart
+                                data={data || []}
+                                wordField="processed_text"
+                                weightField="count"
+                                colorField="processed_text"
                             />
                         </Card>
+
+                        {['entity', 'domain', 'hashtag', 'cashtag', 'url'].includes(type) && 
+                            <Card title={type === 'url' ? "Top 25 URL Host" : "Top 25 Content Word"}>
+                                <TreemapChart
+                                    data={{
+                                        name: 'root',
+                                        children: data?.map(e => ({ name: e.processed_text, value: e.count })).slice(0, 25) || []
+                                    }}
+                                    colorField="name"
+                                />
+                            </Card>
+                        }
+                        {['content'].includes(type) && (
+                            <>
+                                <Card title="Top 10 Content Words">
+                                    <Top10ContentWordsBarChart />
+                                </Card>
+
+                                <Card title="Content Length with Public Metrics">
+                                    <ContentLengthWithPublicMetricScatterPlotChart />
+                                </Card>
+                            </>
+                        )}
+                        {['annotation'].includes(type) && (
+                            <>
+                                <Card title="Annotation Types">
+                                    <AnnotationTypesRoseChart />
+                                </Card>
+
+                                <Card title="Top 10 Annotation Words">
+                                    <Top10AnnotationWordsBarChart />
+                                </Card>
+                            </>
+                        )}
                     </Col>
                 </Row>
             </div>
