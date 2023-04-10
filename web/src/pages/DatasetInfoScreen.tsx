@@ -9,14 +9,16 @@ import PossibleSensitiveContentDistributionChart from "../components/PossibleSen
 import DatasetLabelComparisonChart from "../components/DatasetLabelComparisonChart";
 import { DatasetStatisticalInfo } from "../components/DatasetStatisticalInfo";
 import getDataAmountThroughTime from "../api/getDataAmountThroughTime";
+import { useFiltering } from "../store/filtering";
 
 const DataAmountThroughTimeChart = () => {
 
-    const { data, isLoading } = useQuery('getDataAmountThroughTime', getDataAmountThroughTime);
+    const { label } = useFiltering();
+    const { data, isLoading, refetch } = useQuery('getDataAmountThroughTime', () => getDataAmountThroughTime(label));
 
     useEffect(() => {
-        console.log(data);
-    }, [data]);
+        refetch();
+    }, [label]);
 
     if (isLoading) {
         return (
