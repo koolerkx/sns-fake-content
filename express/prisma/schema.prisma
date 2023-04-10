@@ -77,13 +77,194 @@ type UserUrlsUrls {
   url          String
 }
 
+model dummy_tweets_annotation_type {
+  id                 String  @id @default(auto()) @map("_id") @db.ObjectId
+  count              Int
+  created_at         Int
+  label              String
+  possibly_sensitive Boolean
+  type               String
+}
+
+model dummy_tweets_annotation_word {
+  id                 String  @id @default(auto()) @map("_id") @db.ObjectId
+  count              Int
+  created_at         Int
+  label              String
+  normalized_text    String
+  possibly_sensitive Boolean
+}
+
+model dummy_tweets_cashtag_word {
+  id                 String  @id @default(auto()) @map("_id") @db.ObjectId
+  count              Int
+  created_at         Int
+  label              String
+  possibly_sensitive Boolean
+  tag                String
+}
+
+model dummy_tweets_content_word {
+  id                 String  @id @default(auto()) @map("_id") @db.ObjectId
+  count              Int
+  created_at         Int
+  label              String
+  possibly_sensitive Boolean
+  processed_text     String
+}
+
+model dummy_tweets_domain_word {
+  id                 String  @id @default(auto()) @map("_id") @db.ObjectId
+  count              Int
+  created_at         Int
+  domain_description String?
+  domain_name        String
+  label              String
+  possibly_sensitive Boolean
+}
+
+model dummy_tweets_entity_word {
+  id                 String  @id @default(auto()) @map("_id") @db.ObjectId
+  count              Int
+  created_at         Int
+  entity_description String?
+  entity_name        String
+  label              String
+  possibly_sensitive Boolean
+}
+
+model dummy_tweets_hashtag_word {
+  id                 String  @id @default(auto()) @map("_id") @db.ObjectId
+  count              Int
+  created_at         Int
+  label              String
+  possibly_sensitive Boolean
+  tag                String
+}
+
+model dummy_tweets_label_time {
+  id                 String  @id @default(auto()) @map("_id") @db.ObjectId
+  count              Int
+  created_at         Int
+  label              String
+  possibly_sensitive Boolean
+}
+
+model dummy_tweets_statistic {
+  id                 String @id @default(auto()) @map("_id") @db.ObjectId
+  like_count_mean    Float
+  like_count_q0      Float
+  like_count_q1      Float
+  like_count_q2      Float
+  like_count_q3      Float
+  like_count_q4      Float
+  like_count_std     Float
+  like_count_var     Float
+  quote_count_mean   Float
+  quote_count_q0     Float
+  quote_count_q1     Float
+  quote_count_q2     Float
+  quote_count_q3     Float
+  quote_count_q4     Float
+  quote_count_std    Float
+  quote_count_var    Float
+  reply_count_mean   Float
+  reply_count_q0     Float
+  reply_count_q1     Float
+  reply_count_q2     Float
+  reply_count_q3     Float
+  reply_count_q4     Float
+  reply_count_std    Float
+  reply_count_var    Float
+  retweet_count_mean Float
+  retweet_count_q0   Float
+  retweet_count_q1   Float
+  retweet_count_q2   Float
+  retweet_count_q3   Float
+  retweet_count_q4   Float
+  retweet_count_std  Float
+  retweet_count_var  Float
+}
+
+model dummy_tweets_text_length {
+  id                    String   @id @default(auto()) @map("_id") @db.ObjectId
+  created_at            Int
+  impression_count      Int
+  label                 String
+  like_count            Int
+  possibly_sensitive    Boolean
+  processed_text        String[]
+  processed_text_length Int
+  quote_count           Int
+  reply_count           Int
+  retweet_count         Int
+  text                  String
+  text_character_length Int
+  text_length           Int
+  /// Multiple data types found: Int: 0.1%, BigInt: 99.9% out of 1000 sampled entries
+  tweet_id              Json
+}
+
+model dummy_tweets_url_domain {
+  id                 String  @id @default(auto()) @map("_id") @db.ObjectId
+  count              Int
+  created_at         Int
+  domain             String
+  label              String
+  possibly_sensitive Boolean
+  registered_domain  String
+  subdomain          String
+  suffix             String
+}
+
+model dummy_tweets_url_title_word {
+  id                 String  @id @default(auto()) @map("_id") @db.ObjectId
+  count              Int
+  created_at         Int
+  label              String
+  possibly_sensitive Boolean
+  processed_title    String?
+}
+
+model dummy_users_description_length {
+  id                           String   @id @default(auto()) @map("_id") @db.ObjectId
+  description                  String
+  description_character_length Int
+  description_length           Int
+  followers_count              Int
+  following_count              Int
+  /// Multiple data types found: Int: 69.2%, BigInt: 30.8% out of 1000 sampled entries
+  id_                          Json     @map("id")
+  label                        Boolean?
+  listed_count                 Int
+  processed_description        String[]
+  processed_description_length Int
+  tweet_count                  Int
+  year                         Int
+}
+
+model dummy_users_description_word {
+  id                    String   @id @default(auto()) @map("_id") @db.ObjectId
+  count                 Int
+  label                 Boolean?
+  processed_description String
+  year                  Int
+}
+
+model dummy_users_label {
+  id    String   @id @default(auto()) @map("_id") @db.ObjectId
+  count Int
+  label Boolean?
+  year  Int
+}
+
 model histories {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   createdAt DateTime @db.Date
+  label     String
   score     Float
   text      String
   type      String
-  label     String
 }
 
 model tweet_annotations {
@@ -96,7 +277,7 @@ model tweet_annotations {
 model tweet_cashtags {
   id       String                @id @default(auto()) @map("_id") @db.ObjectId
   cashtags TweetCashtagsCashtags
-  /// Multiple data types found: Int: 0.3%, BigInt: 99.7% out of 1000 sampled entries
+  /// Multiple data types found: Int: 0.1%, BigInt: 99.9% out of 1000 sampled entries
   tweet_id Json
 }
 
@@ -114,29 +295,29 @@ model tweet_context {
 model tweet_hashtags {
   id       String                @id @default(auto()) @map("_id") @db.ObjectId
   hashtags TweetHashtagsHashtags
-  /// Multiple data types found: Int: 0.2%, BigInt: 99.8% out of 1000 sampled entries
-  tweet_id Json
+  tweet_id BigInt
 }
 
 model tweet_mentions {
   id       String                @id @default(auto()) @map("_id") @db.ObjectId
   mentions TweetMentionsMentions
-  tweet_id BigInt
+  /// Multiple data types found: Int: 0.1%, BigInt: 99.9% out of 1000 sampled entries
+  tweet_id Json
 }
 
 model tweet_urls {
   id       String        @id @default(auto()) @map("_id") @db.ObjectId
-  tweet_id BigInt
+  /// Multiple data types found: Int: 0.2%, BigInt: 99.8% out of 1000 sampled entries
+  tweet_id Json
   urls     TweetUrlsUrls
 }
 
 model tweets {
   id                     String   @id @default(auto()) @map("_id") @db.ObjectId
-  /// Multiple data types found: Int: 53.2%, BigInt: 46.8% out of 1000 sampled entries
+  /// Multiple data types found: Int: 51.6%, BigInt: 48.4% out of 1000 sampled entries
   author_id              Json
   content                String
-  /// Multiple data types found: Int: 0.1%, BigInt: 99.9% out of 1000 sampled entries
-  conversation_id        Json
+  conversation_id        BigInt
   created_at             DateTime @db.Date
   edit_history_tweet_ids String[]
   impression_count       Int
@@ -150,8 +331,7 @@ model tweets {
   reply_count            Int
   reply_settings         String
   retweet_count          Int
-  /// Multiple data types found: Int: 0.1%, BigInt: 99.9% out of 1000 sampled entries
-  tweet_id               Json
+  tweet_id               BigInt
 }
 
 model user_cashtags {
@@ -167,7 +347,7 @@ model user_hashtags {
   hashtag     String
   hashtag_raw UserHashtagsHashtagRaw[]
   hashtags    String[]
-  /// Multiple data types found: Int: 67.4%, BigInt: 32.6% out of 1000 sampled entries
+  /// Multiple data types found: Int: 65.2%, BigInt: 34.8% out of 1000 sampled entries
   user_id     Json
 }
 
@@ -175,7 +355,7 @@ model user_urls {
   id       String         @id @default(auto()) @map("_id") @db.ObjectId
   raw_urls String
   urls     UserUrlsUrls[]
-  /// Multiple data types found: Int: 74.4%, BigInt: 25.6% out of 1000 sampled entries
+  /// Multiple data types found: Int: 73.1%, BigInt: 26.9% out of 1000 sampled entries
   user_id  Json
 }
 
@@ -186,14 +366,16 @@ model users {
   followers_count        Int
   following_count        Int
   listed_count           Int
-  name                   String
+  name                   String?
   pinned_tweet_id        BigInt?
-  profile_image_url      String
+  profile_image_url      String?
   protected              Boolean
   source                 String
   tweet_count            Int
-  /// Multiple data types found: Int: 62.5%, BigInt: 37.5% out of 1000 sampled entries
+  /// Multiple data types found: Int: 65%, BigInt: 35% out of 1000 sampled entries
   user_id                Json
   username               String
   verified               Boolean
+  /// Could not determine type: the field only had null or empty values in the sample set.
+  // withheld_country_codes Json?   @map("withheld.country_codes")
 }
