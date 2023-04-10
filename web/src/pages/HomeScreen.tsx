@@ -8,13 +8,13 @@ import SimpleDetectionResultDisplay from "../components/SimpleDetectionResultDis
 import { Link } from "react-router-dom";
 import StatisticComponent from "../components/StatisticComponent";
 import DatasetLabelComparisonChart from "../components/DatasetLabelComparisonChart";
-const { Title, Paragraph } = Typography;
+const { Title } = Typography;
 
 const HomeScreen = (): React.ReactElement => {
 
   const ref = useRef<any>();
 
-  const { data } = useQuery('getWordCloud', getWordCloud);
+  const { data } = useQuery('getWordCloud', () => getWordCloud());
 
   return (
     <div>
@@ -40,9 +40,9 @@ const HomeScreen = (): React.ReactElement => {
                 <WordCloudChart
                   chartRef={ref}
                   data={data || []}
-                  wordField="_id"
-                  weightField="total"
-                  colorField="_id"
+                  wordField="processed_text"
+                  weightField="count"
+                  colorField="processed_text"
                 />
               </Card>
             </div>

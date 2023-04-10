@@ -4,6 +4,7 @@ import HomeScreen from './pages/HomeScreen';
 import DetectionScreen from './pages/DetectionScreen';
 import DatasetInfoScreen from './pages/DatasetInfoScreen';
 import DatasetTweetsScreen from './pages/DatasetTweetsScreen';
+import DatasetUsersScreen from './pages/DatasetUsersScreen';
 
 const router = createBrowserRouter([
   {
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
       {
         path: '/dataset/tweets',
         element: <DatasetTweetsScreen />,
+      },
+      {
+        path: '/dataset/users',
+        element: <DatasetUsersScreen />,
       },
     ],
   },

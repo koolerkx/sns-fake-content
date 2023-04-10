@@ -27,6 +27,10 @@ export class AggregationController {
         res.json(await this.aggregationService.getPercentagesOfTweetsGroupByLabel());
     }
 
+    getPercentagesOfUsersGroupByLabel = async (_: Request, res: Response) => {
+        res.json(await this.aggregationService.getPercentagesOfUsersGroupByLabel());
+    }
+
     getPercentagesOfPossibleSensitiveContent = async (_: Request, res: Response) => {
         res.json(await this.aggregationService.getPercentagesOfPossibleSensitiveContent());
     }
@@ -43,6 +47,10 @@ export class AggregationController {
         res.json(await this.aggregationService.getLabelDistributionThroughTime());
     }
 
+    getUserCreatedCountThroughTime = async (_: Request, res: Response) => {
+        res.json(await this.aggregationService.getUserCreatedCountThroughTime());
+    }
+
     getDataAmountThroughTime = async (_: Request, res: Response) => {
         res.json(await this.aggregationService.getDataAmountThroughTime());
     }
@@ -54,6 +62,9 @@ export class AggregationController {
     getTop10AnnotationWordsGroupByLabel = async (_: Request, res: Response) => {
         res.json(await this.aggregationService.getTop10AnnotationWordsGroupByLabel());
     }
+    getTop10UserWordsGroupByLabel = async (_: Request, res: Response) => {
+        res.json(await this.aggregationService.getTop10UserWordsGroupByLabel());
+    }
 
     getContentLengthWithPublicMetric = async (_: Request, res: Response) => {
         res.json(await this.aggregationService.getContentLengthWithPublicMetric());
@@ -61,6 +72,10 @@ export class AggregationController {
 
     getAnnotationTypes = async (_: Request, res: Response) => {
         res.json(await this.aggregationService.getAnnotationTypes());
+    }
+
+    getDescriptionLengthWithPublicMetric = async (_: Request, res: Response) => {
+        res.json(await this.aggregationService.getDescriptionLengthWithPublicMetric());
     }
 
     getDetectionCount = async (_: Request, res: Response) => {
