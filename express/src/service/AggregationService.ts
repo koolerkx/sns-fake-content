@@ -1,4 +1,3 @@
-import mockWordCloud from '../mock/word-cloud.json';
 import mockTop20TrueTags from '../mock/tag-true-top-20.json';
 import mockTop20FalseTags from '../mock/tag-false-top-20.json';
 import { prisma } from '../utils/db';
