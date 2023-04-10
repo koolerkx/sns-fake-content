@@ -5,7 +5,7 @@ services:
     build:
       context: ./web/
       args:
-        - VITE_API_ENDPOINT=http://localhost:3000/v1
+        - VITE_API_ENDPOINT=http://localhost:3000/v3
     ports:
       - "80:5173"
 
@@ -16,3 +16,21 @@ services:
       - "3000:3000"
     env_file:
       - ./express/.env
+
+  backend:
+    build:
+      context: ./backend_api/
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./backend_api/.env
+
+  mongodb:
+    image: mongo:6.0.4
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./mongoData:/data/db
+
+  
