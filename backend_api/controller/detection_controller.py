@@ -1,10 +1,8 @@
-from random import random
-
 from fastapi import APIRouter, HTTPException
 from route import router
 from service.detection_bert_service import DetectionBERTService
-from service.detection_tfidf_service import DetectionTFIDFService
 from service.detection_count_service import DetectionCountService
+from service.detection_tfidf_service import DetectionTFIDFService
 from service.detection_word2vec_service import DetectionWord2VecService
 from service.detection_xlnet_service import DetectionXLNetService
 
@@ -49,7 +47,12 @@ async def detect_tfidf(model_name: str, text: str):
 @router.get("/detect/word2vec/{model_name}", response_model=DetectionResult)
 async def detect_word2vec(model_name: str, text: str):
     # calls the detection services to process the image file and return results
-    accuracy = random()
+    if model_name is None:
+        raise HTTPException(status_code=404, detail="Model not found.")
+    
+    # embedding = json.loads(os.path.abspath(os.path.join(path, "/word2vec.json)")))
+    
+    # processed_text = filter(lambda x: x != None ,[embedding[word] if word in embedding.keys() else None for word in text.split(' ')])
 
     ret = 0.0
 
