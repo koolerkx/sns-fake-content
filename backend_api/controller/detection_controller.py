@@ -9,6 +9,7 @@ from service.detection_xlnet_service import DetectionXLNetService
 
 from model.detection_result import DetectionResult
 
+from utils.pre_process import text_cleaning
 
 @router.get("/detect/bow/{model_name}", response_model=DetectionResult)
 async def detect_count(model_name: str, text: str):
@@ -16,10 +17,12 @@ async def detect_count(model_name: str, text: str):
     if model_name is None:
         raise HTTPException(status_code=404, detail="Model not found.")
 
+    processed_text = text_cleaning(text)
+
     ret = 0.0
 
     try:
-        ret = DetectionCountService().detect(model_name, text)
+        ret = DetectionCountService().detect(model_name, processed_text)
     except RuntimeError as e:
         raise HTTPException(status_code=500, detail=str(e))
 
@@ -32,10 +35,12 @@ async def detect_tfidf(model_name: str, text: str):
     if model_name is None:
         raise HTTPException(status_code=404, detail="Model not found.")
 
+    processed_text = text_cleaning(text)
+
     ret = 0.0
 
     try:
-        ret = DetectionTFIDFService().detect(model_name, text)
+        ret = DetectionTFIDFService().detect(model_name, processed_text)
     except RuntimeError as e:
         raise HTTPException(status_code=500, detail=str(e))
 
@@ -48,10 +53,12 @@ async def detect_word2vec(model_name: str, text: str):
     if model_name is None:
         raise HTTPException(status_code=404, detail="Model not found.")
 
+    processed_text = text_cleaning(text)
+
     ret = 0.0
 
     try:
-        ret = DetectionWord2VecService().detect(model_name, text)
+        ret = DetectionWord2VecService().detect(model_name, processed_text)
     except RuntimeError as e:
         raise HTTPException(status_code=500, detail=str(e))
 
@@ -59,15 +66,17 @@ async def detect_word2vec(model_name: str, text: str):
 
 
 @router.get("/detect/fasttext/{model_name}", response_model=DetectionResult)
-async def detect_word2vec(model_name: str, text: str):
+async def detect_fasttext(model_name: str, text: str):
     # calls the detection services to process the image file and return results
     if model_name is None:
         raise HTTPException(status_code=404, detail="Model not found.")
+    
+    processed_text = text_cleaning(text)
 
     ret = 0.0
 
     try:
-        ret = DetectionFastTextService().detect(model_name, text)
+        ret = DetectionFastTextService().detect(model_name, processed_text)
     except RuntimeError as e:
         raise HTTPException(status_code=500, detail=str(e))
 

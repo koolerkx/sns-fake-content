@@ -3,7 +3,10 @@ import os
 from enum import Enum
 
 import numpy as np
+import spacy
 from keras.utils import pad_sequences
+
+nlp = spacy.load("en_core_web_sm")
 
 
 class WordEmbedding(Enum):
@@ -26,3 +29,17 @@ def nn_process(texts, type: WordEmbedding):
     ]
     text_index = pad_sequences(text_index, maxlen=PADDING_LENGTH)
     return np.array(text_index)
+
+def get_tokenized_text(doc) -> "list[str]":
+    return list(
+        filter(
+            lambda x: str(x) != "",
+            [
+                token.lemma_.lower() if not token.is_stop and token.is_alpha else ""
+                for token in doc
+            ],
+        )
+    )
+
+def text_cleaning(text: str):
+    return " ".join(get_tokenized_text(nlp(text)))
