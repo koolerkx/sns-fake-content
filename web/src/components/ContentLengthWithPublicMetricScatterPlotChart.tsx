@@ -1,13 +1,20 @@
 import { Select, Spin } from "antd";
 import { useQuery } from "react-query";
 import { ScatterChart } from "@opd/g2plot-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import getContentLengthWithPublicMetric from "../api/getContentLengthWithPublicMetric";
+import { useFiltering } from "../store/filtering";
 
 export const ContentLengthWithPublicMetricScatterPlotChart = () => {
 
-    const { data, isLoading } = useQuery('getContentLengthWithPublicMetric', getContentLengthWithPublicMetric);
+    const store = useFiltering();
+
+    const { data, isLoading, refetch } = useQuery('getContentLengthWithPublicMetric', () => getContentLengthWithPublicMetric(store.label));
     const [xField, setXField] = useState('like_count');
+
+    useEffect(() => {
+        refetch();
+    }, [store.label]);
 
     if (isLoading) {
         return (

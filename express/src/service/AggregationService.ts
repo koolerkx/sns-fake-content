@@ -198,8 +198,13 @@ export class AggregationService {
         };
     }
 
-    getLabelDistributionThroughTime = async () => {
+    getLabelDistributionThroughTime = async (label: "true" | "false" | null = null) => {
         return await prisma.dummy_tweets_label_time.findMany({
+            ...(label !== null ? {
+                where: {
+                    label,
+                }
+            } : {}),
             select: {
                 label: true,
                 created_at: true,
@@ -218,9 +223,23 @@ export class AggregationService {
         })).map(({ year, ...e }) => ({ ...e, label: '' + (e.label ?? 'true'), created_at: year }));
     }
 
-    getDataAmountThroughTime = async () => {
+    getDataAmountThroughTime = async (label: "true" | "false" | null = null) => {
         return await prisma.dummy_tweets_label_time.aggregateRaw({
             pipeline: [
+                ...(label !== null ? [
+                    {
+                        $match: {
+                            $or: [
+                                {
+                                    label,
+                                },
+                                {
+                                    label: label === 'true',
+                                }
+                            ]
+                        }
+                    }
+                ] : []),
                 {
                     $group: {
                     _id: {
@@ -293,9 +312,23 @@ export class AggregationService {
         });
     }
 
-    getTop10ContentWordsGroupByLabel = async () => {
+    getTop10ContentWordsGroupByLabel = async (label: "true" | "false" | null = null) => {
         return await prisma.dummy_tweets_content_word.aggregateRaw({
             pipeline: [
+                ...(label !== null ? [
+                    {
+                        $match: {
+                            $or: [
+                                {
+                                    label,
+                                },
+                                {
+                                    label: label === 'true',
+                                }
+                            ]
+                        }
+                    }
+                ] : []),
                 {
                     $group: {
                         _id: "$processed_text",
@@ -344,9 +377,23 @@ export class AggregationService {
         });
     }
 
-    getTop10AnnotationWordsGroupByLabel = async () => {
+    getTop10AnnotationWordsGroupByLabel = async (label: "true" | "false" | null = null) => {
         return await prisma.dummy_tweets_annotation_word.aggregateRaw({
             pipeline: [
+                ...(label !== null ? [
+                    {
+                        $match: {
+                            $or: [
+                                {
+                                    label,
+                                },
+                                {
+                                    label: label === 'true',
+                                }
+                            ]
+                        }
+                    }
+                ] : []),
                 {
                     $group: {
                         _id: "$normalized_text",
@@ -454,9 +501,23 @@ export class AggregationService {
         return await prisma.tweets.count();
     }
 
-    getContentLengthWithPublicMetric = async () => {
+    getContentLengthWithPublicMetric = async (label: "true" | "false" | null = null) => {
         return await prisma.dummy_tweets_text_length.aggregateRaw({
             pipeline: [
+                ...(label !== null ? [
+                    {
+                        $match: {
+                            $or: [
+                                {
+                                    label,
+                                },
+                                {
+                                    label: label === 'true',
+                                }
+                            ]
+                        }
+                    }
+                ] : []),
                 {
                     $project: {
                     _id: 0,
@@ -475,9 +536,23 @@ export class AggregationService {
         });
     }
 
-    getAnnotationTypes = async () => {
+    getAnnotationTypes = async (label: "true" | "false" | null = null) => {
         return await prisma.dummy_tweets_annotation_type.aggregateRaw({
             pipeline:[
+                ...(label !== null ? [
+                    {
+                        $match: {
+                            $or: [
+                                {
+                                    label,
+                                },
+                                {
+                                    label: label === 'true',
+                                }
+                            ]
+                        }
+                    }
+                ] : []),
                 {
                     $group: {
                         _id: "$type",
