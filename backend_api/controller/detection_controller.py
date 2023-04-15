@@ -83,7 +83,7 @@ async def detect_fasttext(model_name: str, text: str):
     return {"result": True, "data": ret}
 
 
-@router.get("/detect/bert", response_model=DetectionResult)
+@router.get("/detect/transformer/bert", response_model=DetectionResult)
 async def detect_bert(text: str):
     return {
         "result": True,
@@ -91,7 +91,7 @@ async def detect_bert(text: str):
     }
 
 
-@router.get("/detect/xlnet", response_model=DetectionResult)
+@router.get("/detect/transformer/xlnet", response_model=DetectionResult)
 async def detect_xlnet(text: str):
     return {
         "result": True,
